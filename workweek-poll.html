@@ -65,7 +65,6 @@
             padding: 15px;
             margin: 20px 0;
             position: relative;
-            z-index: 9999;
         }
 
         .poll-title {
@@ -88,8 +87,6 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            position: relative;
-            z-index: 10000;
         }
 
         @media (min-width: 480px) {
@@ -111,8 +108,6 @@
             justify-content: center;
             gap: 6px;
             color: white;
-            position: relative;
-            z-index: 10001;
         }
 
         .btn-yes { background-color: #16a34a; }
@@ -211,10 +206,10 @@
         <p class="poll-subtitle">Cast your vote below! Participation is 100% anonymous.</p>
 
         <div id="poll-buttons" class="poll-buttons">
-            <button onclick="castVote(event, 'yes')" class="poll-btn btn-yes">
+            <button onclick="castVote('yes')" class="poll-btn btn-yes">
                 👍 YES, ABSOLUTELY
             </button>
-            <button onclick="castVote(event, 'no')" class="poll-btn btn-no">
+            <button onclick="castVote('no')" class="poll-btn btn-no">
                 👎 NO, IT WOULDN'T WORK
             </button>
         </div>
@@ -263,12 +258,7 @@
 <script src="https://pl30918892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
 
 <script>
-function castVote(event, option) {
-    if (event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
+function castVote(option) {
     let baseYes = 11420;
     let baseNo = 2870;
 
