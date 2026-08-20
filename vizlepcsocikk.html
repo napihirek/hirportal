@@ -4,123 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hatalmas vita robbant ki: Meg kellett volna építeni a dunai vízlépcsőt?</title>
-
-    <!-- 1. POPUNDER HIRDETÉS -->
-    <script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
-
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: #222;
         }
-
         .container {
-            max-width: 750px;
-            margin: 20px auto;
+            max-width: 600px;
+            margin: 0 auto;
             background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        .ad-container {
-            text-align: center;
-            margin: 20px 0;
-            min-height: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .category-badge {
-            background-color: #e11d48;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            display: inline-block;
+        h1 {
+            font-size: 22px;
+            line-height: 1.3;
+            color: #000;
             margin-bottom: 10px;
         }
-
-        h1 {
-            font-size: 1.75rem;
-            color: #0f172a;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            line-height: 1.3;
-        }
-
         .meta-info {
-            font-size: 0.85rem;
-            color: #64748b;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
         }
-
-        .article-text p {
-            margin-bottom: 18px;
-            font-size: 1.05rem;
-            color: #334155;
-        }
-
-        /* SZAVAZÓBOX STÍLUSOK */
-        .poll-card {
-            background: #f8fafc;
-            border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-        }
-
-        .poll-image-container {
-            position: relative;
+        .article-image {
             width: 100%;
-            height: 230px;
-            overflow: hidden;
-            border-radius: 8px;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
             margin-bottom: 15px;
         }
-
-        .poll-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .highlight {
+            font-weight: bold;
+            color: #c00000;
+        }
+        .ad-box {
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            text-align: center;
+            margin: 15px 0;
+            min-height: 100px;
         }
 
-        .poll-tag {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #dc2626;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 4px;
-            text-transform: uppercase;
+        /* --- SZAVAZÓBOX STÍLUSOK (SZERVESEN ILLESZKEDIK A SABLONHOZ) --- */
+        .poll-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
         }
 
         .poll-title {
             margin: 0 0 8px 0;
-            font-size: 1.2rem;
-            color: #0f172a;
+            font-size: 17px;
+            color: #000;
             font-weight: bold;
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .poll-subtitle {
-            margin: 0 0 18px 0;
-            font-size: 0.85rem;
-            color: #64748b;
+            margin: 0 0 15px 0;
+            font-size: 13px;
+            color: #666;
             text-align: center;
         }
 
@@ -138,80 +96,61 @@
 
         .poll-btn {
             flex: 1;
-            padding: 14px 10px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            border-radius: 4px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             color: white;
         }
 
-        .poll-btn:active {
-            transform: scale(0.97);
-        }
-
-        .btn-yes {
-            background-color: #16a34a;
-        }
-
-        .btn-no {
-            background-color: #dc2626;
-        }
-
-        .poll-btn:hover {
-            opacity: 0.92;
-        }
+        .btn-yes { background-color: #16a34a; }
+        .btn-no { background-color: #dc2626; }
 
         .poll-results {
             margin-top: 10px;
         }
 
         .result-row {
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .result-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.85rem;
+            font-size: 13px;
             font-weight: bold;
-            color: #334155;
-            margin-bottom: 5px;
+            color: #333;
+            margin-bottom: 4px;
         }
 
         .bar-bg {
-            background-color: #e2e8f0;
-            border-radius: 6px;
-            height: 20px;
+            background-color: #e5e5e5;
+            border-radius: 4px;
+            height: 18px;
             width: 100%;
             overflow: hidden;
         }
 
         .bar-fill {
             height: 100%;
-            border-radius: 6px;
+            border-radius: 4px;
             transition: width 0.8s ease-in-out;
         }
 
-        .bar-yes {
-            background-color: #16a34a;
-        }
-
-        .bar-no {
-            background-color: #dc2626;
-        }
+        .bar-yes { background-color: #16a34a; }
+        .bar-no { background-color: #dc2626; }
 
         .poll-thankyou {
             text-align: center;
-            font-size: 0.8rem;
-            color: #64748b;
-            margin: 14px 0 0 0;
+            font-size: 12px;
+            color: #666;
+            margin: 10px 0 0 0;
             font-style: italic;
         }
     </style>
@@ -219,41 +158,58 @@
 <body>
 
 <div class="container">
-    <span class="category-badge">Gazdaság & Politika</span>
-    <h1>Bős-Nagymaros árnyékában: Újra fellángolt a vita a dunai vízlépcső megépítéséről</h1>
-    
-    <div class="meta-info">
-        <span>Szerző: Napi Hírek Szerkesztőség</span> | <span>Közzétéve: 2026. augusztus 20.</span>
-    </div>
 
-    <!-- 2. NATIVE / NATIVE CONTAINER HIRDETÉS -->
-    <div class="ad-container">
+    <!-- 1. HIRDETÉS (Oldal teteje - Native Banner) -->
+    <div class="ad-box">
         <script async="async" data-cfasync="false" src="https://pl30905622.effectivecpmnetwork.com/587ef44758d88a57d7a7450b8804f2f7/invoke.js"></script>
         <div id="container-587ef44758d88a57d7a7450b8804f2f7"></div>
     </div>
 
-    <div class="article-text">
-        <p>Az elmúlt időszak szélsőséges időjárási eseményei, a nyári aszályok és a hirtelen lezúduló áradások miatt ismét terítékre került Magyarország egyik legérzékenyebb energetikai és környezetvédelmi kérdése: a dunai vízlépcsőrendszer ügye.</p>
-        
-        <p>Szakértők egy csoportja szerint a klímaváltozás és az elszabaduló energiaárak korában súlyos stratégiai mulasztás volt, hogy az elmúlt évtizedekben nem épült ki a vízi energiát hasznosítani tudó és a vízszintet szabályozó gátrendszer a Duna hazai szakaszán.</p>
+    <!-- CIKK CÍME -->
+    <h1>Hatalmas vita robbant ki: Meg kellett volna építeni a dunai vízlépcsőt?</h1>
+
+    <div class="meta-info">
+        Friss Hírek | Megtekintések: 42 180
     </div>
+
+    <!-- CIKK BORÍTÓKÉPE -->
+    <img class="article-image" src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" alt="Dunai vízlépcső és gát">
+
+    <!-- CIKK 1. BEKEZDÉS -->
+    <p>
+        Az elmúlt időszak szélsőséges időjárási eseményei, a nyári aszályok és a hirtelen lezúduló áradások miatt ismét terítékre került Magyarország egyik legérzékenyebb energetikai és környezetvédelmi kérdése: a dunai vízlépcsőrendszer ügye.
+    </p>
+
+    <!-- 2. HIRDETÉS (Cikk közepe - 300x250 Banner) -->
+    <div class="ad-box">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '41bd844ac212150d856d667bc7142125',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/41bd844ac212150d856d667bc7142125/invoke.js"></script>
+    </div>
+
+    <!-- CIKK 2. BEKEZDÉS -->
+    <p>
+        Szakértők egy csoportja szerint a klímaváltozás és az elszabaduló energiaárak korában súlyos stratégiai mulasztás volt, hogy az elmúlt évtizedekben nem épült ki a vízi energiát hasznosítani tudó és a vízszintet szabályozó gátrendszer a Duna hazai szakaszán.
+    </p>
 
     <!-- SZAVAZÓBOX -->
     <div class="poll-card">
-        <div class="poll-image-container">
-            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="Duna vízlépcső és gát" class="poll-img">
-            <span class="poll-tag">FORRÓ TÉMA</span>
-        </div>
-
         <h3 class="poll-title">Szerinted már a Fidesz-kormány alatt meg kellett volna építenie Magyarországnak a dunai vízlépcsőt?</h3>
-        <p class="poll-subtitle">Mondd el a véleményed! A szavazás teljesen anonim.</p>
+        <p class="poll-subtitle">Mondd el a véleményed! A szavazás anonim.</p>
 
         <div id="poll-buttons" class="poll-buttons">
             <button onclick="castVote('yes')" class="poll-btn btn-yes">
-                <span class="btn-icon">👍</span> IGEN, KELLETT VOLNA
+                👍 IGEN, KELLETT VOLNA
             </button>
             <button onclick="castVote('no')" class="poll-btn btn-no">
-                <span class="btn-icon">👎</span> NEM, JÓ DÖNTÉS VOLT
+                👎 NEM, JÓ DÖNTÉS VOLT
             </button>
         </div>
 
@@ -282,26 +238,22 @@
         </div>
     </div>
 
-    <div class="article-text">
-        <p>A kritikusok ugyanakkor változatlanul úgy vélik, hogy egy ekkora méretű gát helyrehozhatatlan környezeti károkat okozna a Duna természetes élővilágában és az ivóvízbázisban. A vita nem csillapodik, és a gazdasági szempontok összecsapnak a környezetvédelmi érvekkel.</p>
-    </div>
+    <!-- CIKK 3. BEKEZDÉS (KIEMELÉS) -->
+    <p class="highlight">
+        A vita nem csillapodik, és a gazdasági, energiabiztonsági szempontok nap mint nap összecsapnak a környezetvédelmi érvekkel.
+    </p>
 
-    <!-- 3. BANNER HIRDETÉS (300x250) -->
-    <div class="ad-container">
-        <script>
-          atOptions = {
-            'key' : '41bd844ac212150d856d667bc7142125',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-          };
-        </script>
-        <script src="https://www.highperformanceformat.com/41bd844ac212150d856d667bc7142125/invoke.js"></script>
-    </div>
+    <!-- CIKK ZÁRÓ BEKEZDÉS -->
+    <p>
+        A kritikusok ugyanakkor változatlanul úgy vélik, hogy egy ekkora méretű gát helyrehozhatatlan környezeti károkat okozna a Duna természetes élővilágában és a hazai ivóvízbázisban.
+    </p>
+
 </div>
 
-<!-- 4. SOCIAL BAR HIRDETÉS -->
+<!-- Popunder hirdetés kódja -->
+<script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
+
+<!-- Social Bar hirdetés kódja -->
 <script src="https://pl30918892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
 
 <script>
