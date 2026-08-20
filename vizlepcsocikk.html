@@ -57,13 +57,15 @@
             min-height: 100px;
         }
 
-        /* --- SZAVAZÓBOX STÍLUSOK (SZERVESEN ILLESZKEDIK A SABLONHOZ) --- */
+        /* --- SZAVAZÓBOX STÍLUSOK (KLIKKFOGÓ JAVÍTÁSSAL) --- */
         .poll-card {
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 6px;
             padding: 15px;
             margin: 20px 0;
+            position: relative;
+            z-index: 9999; /* A hirdetési rétegek fölé emeli a dobozt */
         }
 
         .poll-title {
@@ -86,6 +88,8 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            position: relative;
+            z-index: 10000;
         }
 
         @media (min-width: 480px) {
@@ -107,6 +111,8 @@
             justify-content: center;
             gap: 6px;
             color: white;
+            position: relative;
+            z-index: 10001;
         }
 
         .btn-yes { background-color: #16a34a; }
@@ -205,10 +211,10 @@
         <p class="poll-subtitle">Mondd el a véleményed! A szavazás anonim.</p>
 
         <div id="poll-buttons" class="poll-buttons">
-            <button onclick="castVote('yes')" class="poll-btn btn-yes">
+            <button onclick="castVote(event, 'yes')" class="poll-btn btn-yes">
                 👍 IGEN, KELLETT VOLNA
             </button>
-            <button onclick="castVote('no')" class="poll-btn btn-no">
+            <button onclick="castVote(event, 'no')" class="poll-btn btn-no">
                 👎 NEM, JÓ DÖNTÉS VOLT
             </button>
         </div>
@@ -257,7 +263,13 @@
 <script src="https://pl30918892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
 
 <script>
-function castVote(option) {
+function castVote(event, option) {
+    // Megakadályozza, hogy a hirdetési scriptek elkapják a kattintást
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
     let baseYes = 1780;
     let baseNo = 1060;
 
