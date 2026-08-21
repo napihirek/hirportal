@@ -176,31 +176,30 @@
 
 </div>
 
-<!-- Social Bar -->
-<script src="https://pl3098892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
-
 <script>
-    var popunderLoaded = false;
+    var adOpened = false;
 
     function toggleReadMoreAndPopunder() {
         var content = document.getElementById("readMoreContent");
         var btn = document.getElementById("readMoreBtn");
 
-        // Ellenőrizzük, hogy jelenleg ZÁRVA van-e az oldal (tehát most nyitjuk ki)
+        // Amikor a látogató RÁKATTINT a cikk kinyitására:
         if (content.style.display === "none" || content.style.display === "") {
-            // 1. KIKINYITJUK A CIKKET
+            
+            // 1. Kinyitjuk a cikk tartalmát
             content.style.display = "block";
             btn.innerHTML = "Close Article ▲";
 
-            // 2. AZONNAL BETÖLTJÜK A HIRDETÉST A KINYITÁSKOR
-            if (!popunderLoaded) {
-                var popScript = document.createElement('script');
-                popScript.src = "https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js";
-                document.body.appendChild(popScript);
-                popunderLoaded = true; // Csak egyszer fut le
+            // 2. Azonnal megnyitjuk az Adsterra Smartlinket egy új lapon (kizárólag az első nyitási kattintáskor)
+            if (!adOpened) {
+                var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
+                
+                window.open(directAdUrl, '_blank');
+                adOpened = true; // Elmentjük, hogy többször ne nyissa meg
             }
+
         } else {
-            // BECSUKÁSKOR CSAK ELREJTJÜK A TARTALMAT (itt nem tölt be hirdetést)
+            // Amikor a látogató BECSUKJA a cikket, CSAK elrejtjük a szöveget (nem nyílik meg újabb hirdetés)
             content.style.display = "none";
             btn.innerHTML = "Read Full Article ▼";
         }
