@@ -186,19 +186,23 @@
         var content = document.getElementById("readMoreContent");
         var btn = document.getElementById("readMoreBtn");
 
-        if (content.style.display === "block") {
-            content.style.display = "none";
-            btn.innerHTML = "Read Full Article ▼";
-        } else {
+        // Ellenőrizzük, hogy jelenleg ZÁRVA van-e az oldal (tehát most nyitjuk ki)
+        if (content.style.display === "none" || content.style.display === "") {
+            // 1. KIKINYITJUK A CIKKET
             content.style.display = "block";
             btn.innerHTML = "Close Article ▲";
 
+            // 2. AZONNAL BETÖLTJÜK A HIRDETÉST A KINYITÁSKOR
             if (!popunderLoaded) {
                 var popScript = document.createElement('script');
                 popScript.src = "https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js";
                 document.body.appendChild(popScript);
-                popunderLoaded = true;
+                popunderLoaded = true; // Csak egyszer fut le
             }
+        } else {
+            // BECSUKÁSKOR CSAK ELREJTJÜK A TARTALMAT (itt nem tölt be hirdetést)
+            content.style.display = "none";
+            btn.innerHTML = "Read Full Article ▼";
         }
     }
 </script>
