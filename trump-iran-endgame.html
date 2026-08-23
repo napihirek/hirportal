@@ -67,10 +67,8 @@
             padding-bottom: 5px;
         }
 
-        /* COVER IMAGE WITH VIDEO PLAY OVERLAY */
-        .video-container {
-            position: relative;
-            cursor: pointer;
+        /* ARTICLE COVER IMAGE */
+        .image-container {
             margin-bottom: 15px;
         }
         .article-image {
@@ -78,34 +76,6 @@
             height: auto;
             display: block;
             border-radius: 4px;
-        }
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 65px;
-            height: 65px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
-            transition: transform 0.2s;
-        }
-        .play-button::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 12px 0 12px 22px;
-            border-color: transparent transparent transparent #ffffff;
-            margin-left: 4px;
-        }
-        .video-container:hover .play-button {
-            transform: translate(-50%, -50%) scale(1.1);
         }
 
         p {
@@ -251,10 +221,9 @@
         <div id="container-587ef44758d88a57d7a7450b8804f2f7"></div>
     </div>
 
-    <!-- COVER IMAGE WITH VIDEO PLAY OVERLAY -->
-    <div class="video-container" onclick="triggerSmartlinkAndOpen()">
-        <img class="article-image" src="trump-iran.jpg" alt="Trump Social Media Outburst Foreign Policy Crisis">
-        <div class="play-button"></div>
+    <!-- COVER IMAGE -->
+    <div class="image-container">
+        <img class="article-image" src="trump-iran.png" alt="Trump Social Media Outburst Foreign Policy Crisis">
     </div>
 
     <!-- ARTICLE PARAGRAPH 1 -->
