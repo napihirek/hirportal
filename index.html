@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napi Hírek & Global News | Hírportál</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f8f9fa; color: #111; line-height: 1.5; }
+        
+        /* HEADER */
+        header { background: #1a1a1a; color: #fff; padding: 15px 20px; text-align: center; border-bottom: 3px solid #d32f2f; }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; text-transform: uppercase; }
+        .logo span { color: #d32f2f; }
+        .tagline { font-size: 12px; color: #aaa; margin-top: 3px; }
+
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+
+        /* CATEGORY TABS / HEADINGS */
+        .section-title { font-size: 18px; font-weight: 700; text-transform: uppercase; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid #222; display: flex; align-items: center; justify-content: space-between; }
+        .section-title .badge { font-size: 11px; background: #d32f2f; color: #fff; padding: 3px 8px; border-radius: 3px; }
+
+        /* GRID LAYOUT */
+        .news-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 600px) {
+            .news-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* CARD STYLES */
+        .card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.12); }
+        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-tag { font-size: 11px; font-weight: 700; color: #d32f2f; text-transform: uppercase; margin-bottom: 5px; }
+        .card-title { font-size: 16px; font-weight: 700; line-height: 1.35; margin-bottom: 10px; color: #111; }
+        .card-footer { font-size: 12px; color: #777; margin-top: 10px; border-top: 1px solid #f0f0f0; padding-top: 8px; display: flex; justify-content: space-between; }
+
+        /* BOTTOM BANNER AD */
+        .bottom-ad { margin: 40px auto 20px auto; text-align: center; background: #fff; padding: 10px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        footer { text-align: center; font-size: 12px; color: #888; padding: 20px 0; border-top: 1px solid #ddd; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">NAPI<span>HÍREK</span></div>
+        <div class="tagline">Független Hírportal & World News Feed</div>
+    </header>
+
+    <div class="container">
+
+        <!-- MAGYAR HÍREK SZEKCIÓ -->
+        <div class="section-title">
+            Magyarországi Hírek
+            <span class="badge">HU</span>
+        </div>
+
+        <div class="news-grid">
+            <a href="tamogatas.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Támogatás / Gazdaság</div>
+                    <div class="card-title">Fontos bejelentés érkezett a lakossági támogatásokról – Sokakat érint a döntés</div>
+                    <div class="card-footer"><span>Olvasási idő: 2 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="csekk.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Pénzügyek</div>
+                    <div class="card-title">Változás a sárga csekkek befizetésénél – Ennyit kell fizetni ezentúl?</div>
+                    <div class="card-footer"><span>Olvasási idő: 3 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="bolt.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Vásárlás</div>
+                    <div class="card-title">Újabb áremelési hullám a boltokban? Fontos bejelentést tettek a láncok</div>
+                    <div class="card-footer"><span>Olvasási idő: 2 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="erkely.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Otthon & Jog</div>
+                    <div class="card-title">Szigorítanak az erkélyhasználaton? Komoly bírság járhat érte</div>
+                    <div class="card-footer"><span>Olvasási idő: 2 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="iskola-tamogatas.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Család</div>
+                    <div class="card-title">Iskolakezdési támogatás utalása: Itt vannak a pontos dátumok</div>
+                    <div class="card-footer"><span>Olvasási idő: 3 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="palack.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Környezetvédelem</div>
+                    <div class="card-title">Palackvisszaváltási rendszer változás: Így kaphatod vissza a pénzed</div>
+                    <div class="card-footer"><span>Olvasási idő: 2 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="parkolas.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Közlekedés</div>
+                    <div class="card-title">Új parkolási szabályok léptek életbe: Ennyi bírságra számíthatsz</div>
+                    <div class="card-footer"><span>Olvasási idő: 2 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+
+            <a href="vizlepcsocikk.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Környezet & Építés</div>
+                    <div class="card-title">Bős-Nagymarosi vízlépcső vita újra napirenden? Reagáltak az illetékesek</div>
+                    <div class="card-footer"><span>Olvasási idő: 3 perc</span><span>Friss</span></div>
+                </div>
+            </a>
+        </div>
+
+
+        <!-- ANGOL HÍREK SZEKCIÓ -->
+        <div class="section-title" style="margin-top: 40px;">
+            International News & Trends
+            <span class="badge" style="background: #0056b3;">EN</span>
+        </div>
+
+        <div class="news-grid">
+            <a href="us-canada-tariff-poll.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Global Trade</div>
+                    <div class="card-title">Trade Crisis Escalates: Canada Freezes US Talks, Vows 'Dollar-for-Dollar' Retaliation</div>
+                    <div class="card-footer"><span>Read time: 2 mins</span><span>Poll Active</span></div>
+                </div>
+            </a>
+
+            <a href="openai-hack-poll.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">AI & Security</div>
+                    <div class="card-title">AI Out of Control? OpenAI Halts Advanced Training After Autonomous Hack Shockwave</div>
+                    <div class="card-footer"><span>Read time: 3 mins</span><span>Poll Active</span></div>
+                </div>
+            </a>
+
+            <a href="dolan-real-madrid-poll.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">La Liga</div>
+                    <div class="card-title">From Championship to Giant Killers? Ex-Blackburn Winger Prepares for Real Madrid Clash</div>
+                    <div class="card-footer"><span>Read time: 2 mins</span><span>Poll Active</span></div>
+                </div>
+            </a>
+
+            <a href="workweek-poll.html" class="card">
+                <div class="card-body">
+                    <div class="card-tag">Workplace</div>
+                    <div class="card-title">The 4-Day Work Week Experiment: Is It The Future of Global Productivity?</div>
+                    <div class="card-footer"><span>Read time: 3 mins</span><span>Poll Active</span></div>
+                </div>
+            </a>
+        </div>
+
+        <!-- OLDAL ALJÁN LÉVŐ BANNER REKLÁM -->
+        <div class="bottom-ad">
+            <script async="async" data-cfasync="false" src="https://pl30905622.effectivecpmnetwork.com/587ef44758d88a57d7a7450b8804f2f7/invoke.js"></script>
+            <div id="container-587ef44758d88a57d7a7450b8804f2f7"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 Napi Hírek Portal. All rights reserved.
+    </footer>
+
+</body>
+</html>
