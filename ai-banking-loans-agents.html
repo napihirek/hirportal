@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE END OF HUMAN UNDERWRITING: AI Autonomous Agents Take Over Banking Loans</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: #222;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* BREAKING NEWS BADGE */
+        .live-bar {
+            background-color: #c00000;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .live-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            animation: pulse-dot 1s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 22px;
+            line-height: 1.3;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 18px;
+            margin-top: 22px;
+            margin-bottom: 10px;
+            color: #111;
+        }
+        .meta-info {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        /* ARTICLE COVER IMAGE */
+        .image-container {
+            margin-bottom: 15px;
+        }
+        .article-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #c00000;
+            background-color: #fff8f8;
+            padding: 10px;
+            border-left: 4px solid #c00000;
+            margin: 18px 0;
+        }
+        .ad-box {
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            text-align: center;
+            margin: 18px 0;
+            min-height: 100px;
+        }
+
+        /* PULSING READ-MORE BUTTON */
+        .read-more-content {
+            display: none;
+        }
+        .read-more-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,86,179,0.3);
+            animation: pulse-btn 2s infinite;
+        }
+        @keyframes pulse-btn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* FACEBOOK SHARE BUTTON */
+        .share-section {
+            margin: 25px 0 15px 0;
+            text-align: center;
+        }
+        .fb-share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1877f2;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .fb-share-btn:hover {
+            background-color: #166fe5;
+        }
+        .fb-icon {
+            width: 18px;
+            height: 18px;
+            fill: white;
+            margin-right: 8px;
+        }
+
+        /* COMMENTS SECTION */
+        .comments-section {
+            margin-top: 25px;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+        .comment-header {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .comment {
+            display: flex;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #ccc;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .comment-body {
+            background: #f2f3f5;
+            padding: 8px 12px;
+            border-radius: 12px;
+            flex-grow: 1;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #385898;
+        }
+        .comment-actions {
+            font-size: 11px;
+            color: #777;
+            margin-top: 4px;
+            margin-left: 46px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- BREAKING NEWS BADGE -->
+    <div class="live-bar">
+        <span class="live-dot"></span> Special Analysis | Banking & AI
+    </div>
+
+    <!-- ARTICLE TITLE -->
+    <h1>The End of Human Underwriting: How Autonomous AI Agents Are Deciding Loan Approvals</h1>
+
+    <div class="meta-info">
+        Fintech & Economy | Views: 182,300 | Updated 14 mins ago
+    </div>
+
+    <!-- 1. AD (Top - Native Banner) -->
+    <div class="ad-box">
+        <script async="async" data-cfasync="false" src="https://pl30905622.effectivecpmnetwork.com/587ef44758d88a57d7a7450b8804f2f7/invoke.js"></script>
+        <div id="container-587ef44758d88a57d7a7450b8804f2f7"></div>
+    </div>
+
+    <!-- COVER IMAGE (Cseréld a képet: ai-banking.jpg) -->
+    <div class="image-container">
+        <img class="article-image" src="ai-image.jpg" alt="Autonomous AI Loan Approval Analysis">
+    </div>
+
+    <!-- ARTICLE PARAGRAPH 1 -->
+    <p>
+        Across the global financial sector, a quiet revolution is taking place. Traditional loan underwriting—once defined by manual paperwork review and multi-week processing windows—is rapidly being replaced by fully autonomous AI agents capable of approving credit applications in seconds.
+    </p>
+
+    <!-- ARTICLE PARAGRAPH 2 -->
+    <p>
+        Major commercial banks and emerging fintech platforms are now delegating entire risk evaluation workflows to multi-agent artificial intelligence networks. But as execution speeds break historical records, financial analysts and consumer advocates raise urgent questions regarding systemic algorithmic bias and regulatory oversight.
+    </p>
+
+    <!-- PULSING READ-MORE BUTTON -->
+    <button class="read-more-btn" id="readMoreBtn" onclick="toggleReadMoreAndPopunder()">Click to Reveal Full Financial Analysis ▼</button>
+
+    <div class="read-more-content" id="readMoreContent">
+
+        <!-- 2. AD (Middle - 300x250 Banner) -->
+        <div class="ad-box">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '41bd844ac212150d856d667bc7142125',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="https://www.highperformanceformat.com/41bd844ac212150d856d667bc7142125/invoke.js"></script>
+        </div>
+
+        <h2>A Shift from Credit Scores to Real-Time Data Streams</h2>
+
+        <!-- ARTICLE PARAGRAPH 3 -->
+        <p>
+            Rather than relying solely on static FICO credit scores, modern AI agent frameworks ingest real-time cash flow records, corporate tax filings, and live business metrics. Advanced parsing engines instantly evaluate borrower risk profiles, drastically reducing processing costs for institutions while virtually eliminating manual data entry errors.
+        </p>
+
+        <!-- HIGHLIGHT BOX -->
+        <div class="highlight">
+            "Financial institutions are shifting from periodic credit reviews to continuous real-time risk assessment, fundamentally altering how capital is deployed."
+        </div>
+
+        <!-- ARTICLE PARAGRAPH 4 -->
+        <p>
+            For small and mid-sized enterprises, this technology promises unprecedented access to capital. Decisions that previously took three to four weeks are now executed within minutes, allowing businesses to secure emergency liquidity without traditional bureaucratic bottlenecks.
+        </p>
+
+        <h2>Regulatory Heat & Compliance Challenges</h2>
+
+        <!-- ARTICLE PARAGRAPH 5 -->
+        <p>
+            However, regulatory bodies are stepping in. Under strict enforcement frameworks such as the EU AI Act, automated credit scoring is classified under high-risk applications, requiring financial entities to maintain complete transparency, explainability, and human oversight mechanisms for every rejection.
+        </p>
+
+        <!-- ARTICLE PARAGRAPH 6 -->
+        <p>
+            As traditional banking operations continue to digitize, the industry faces a delicate balancing act: capturing the cost efficiencies of autonomous artificial intelligence while guaranteeing fair lending standards across an unpredictable global economy.
+        </p>
+
+    </div>
+
+    <!-- FACEBOOK SHARE BUTTON -->
+    <div class="share-section">
+        <a class="fb-share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://napihirek.github.io/hirportal/ai-banking-analysis.html" target="_blank">
+            <svg class="fb-icon" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Share on Facebook
+        </a>
+    </div>
+
+    <!-- COMMENTS SECTION -->
+    <div class="comments-section">
+        <div class="comment-header">Top Comments (214)</div>
+        
+        <div class="comment">
+            <div class="comment-avatar" style="background-color: #1877f2;"></div>
+            <div class="comment-body">
+                <span class="comment-author">Arthur Pendelton</span><br>
+                Applied for a commercial equipment loan yesterday and got approved in under 5 minutes. The speed is unbelievable compared to last year.
+            </div>
+        </div>
+        <div class="comment-actions" onclick="triggerSmartlinkAndOpen()">
+            Like · Reply · 31 mins ago
+        </div>
+
+        <div class="comment" style="margin-top: 10px;">
+            <div class="comment-avatar" style="background-color: #333;"></div>
+            <div class="comment-body">
+                <span class="comment-author">Claire Bennett</span><br>
+                Speed is great, but what happens when the algorithm makes a systemic mistake during a market downturn? Humans need to stay in the loop.
+            </div>
+        </div>
+        <div class="comment-actions" onclick="triggerSmartlinkAndOpen()">
+            Like · Reply · 12 mins ago
+        </div>
+    </div>
+
+</div>
+
+<!-- Popunder Code -->
+<script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
+
+<!-- Social Bar Code -->
+<script src="https://pl30918892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
+
+<script>
+    var adOpened = false;
+    var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
+
+    function triggerSmartlinkAndOpen() {
+        var content = document.getElementById("readMoreContent");
+        var btn = document.getElementById("readMoreBtn");
+
+        content.style.display = "block";
+        btn.innerHTML = "Close Analysis ▲";
+
+        if (!adOpened) {
+            window.open(directAdUrl, '_blank');
+            adOpened = true;
+        }
+    }
+
+    function toggleReadMoreAndPopunder() {
+        var content = document.getElementById("readMoreContent");
+        var btn = document.getElementById("readMoreBtn");
+
+        if (content.style.display === "none" || content.style.display === "") {
+            triggerSmartlinkAndOpen();
+        } else {
+            content.style.display = "none";
+            btn.innerHTML = "Click to Reveal Full Financial Analysis ▼";
+        }
+    }
+</script>
+
+</body>
+</html>
