@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>China Slams 'Illegal' US Sanctions Over Iran Trade</title>
+    <title>Redirecting to Official Report... | Global Insider</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #f4f4f4; color: #222; }
-        .container { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .container { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
         .live-bar { background-color: #c00000; color: white; font-size: 12px; font-weight: bold; padding: 5px 10px; border-radius: 3px; display: inline-block; margin-bottom: 10px; text-transform: uppercase; }
         h1 { font-size: 22px; line-height: 1.3; color: #000; margin-bottom: 10px; }
         .meta-info { font-size: 12px; color: #666; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         p { font-size: 16px; line-height: 1.65; margin-bottom: 16px; }
-        .highlight { font-weight: bold; color: #c00000; background-color: #fff8f8; padding: 10px; border-left: 4px solid #c00000; margin: 18px 0; }
         .ad-box { background-color: #f9f9f9; border: 1px dashed #ccc; padding: 10px; text-align: center; margin: 18px 0; min-height: 100px; }
-        .read-more-content { display: none; }
-        .read-more-btn { display: block; width: 100%; padding: 16px; background-color: #0056b3; color: white; text-align: center; border: none; border-radius: 5px; font-size: 17px; font-weight: bold; cursor: pointer; margin: 20px 0; box-shadow: 0 4px 10px rgba(0,86,179,0.3); }
+        .read-more-btn { display: block; width: 100%; padding: 18px; background-color: #0056b3; color: white; text-align: center; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,86,179,0.4); text-decoration: none; }
+        .read-more-btn:hover { background-color: #004085; }
     </style>
 </head>
 <body>
@@ -24,10 +23,10 @@
     <h1>China Hits Out at 'Illegal' New US Sanctions on Iran and International Trading Partners</h1>
     
     <div class="meta-info">
-        Geopolitics & World Economy | Source: BBC News | Updated 10 mins ago
+        Geopolitics & World Economy | Source: BBC News | Updated Just Now
     </div>
 
-    <!-- NATIVE BANNER AD -->
+    <!-- BANNER AD -->
     <div class="ad-box">
         <script async="async" data-cfasync="false" src="https://pl30905622.effectivecpmnetwork.com/587ef44758d88a57d7a7450b8804f2f7/invoke.js"></script>
         <div id="container-587ef44758d88a57d7a7450b8804f2f7"></div>
@@ -37,42 +36,27 @@
         Beijing has strongly condemned the latest round of unilateral sanctions imposed by Washington, targeted at entities conducting trade with Iran. Chinese officials warned that these restrictions severely violate international economic norms.
     </p>
 
-    <p>
-        The decision escalates diplomatic tensions as Washington aims to choke off revenue streams tied to Iranian oil exports, while China vows to defend the legitimate rights and interests of its national enterprises.
-    </p>
-
-    <!-- PULSING READ MORE BUTTON -->
-    <button class="read-more-btn" id="readMoreBtn" onclick="toggleReadMoreAndPopunder()">Click to Reveal Full Trade Crisis Details ▼</button>
-
-    <div class="read-more-content" id="readMoreContent">
-        <div class="highlight">
-            "Beijing maintains that unilateral sanctions lacking UN backing are unlawful and threaten global supply chain stability."
-        </div>
-
-        <p>
-            International analysts predict that secondary sanctions on foreign financial institutions dealing with Iran could trigger further retaliation from Beijing, impacting global energy markets and trade shipping routes.
-        </p>
-    </div>
+    <!-- DUPLA AKCIÓS GOMB -->
+    <button class="read-more-btn" onclick="redirectToBBCAndMonetize()">
+        Continue Reading Full Coverage on BBC News ►
+    </button>
 </div>
 
 <!-- POPUNDER CODE -->
 <script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
+
 <script>
-    var adOpened = false;
-    var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
+    function redirectToBBCAndMonetize() {
+        var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
+        var targetBbcUrl = "https://www.bbc.com/news/articles/clyl8965j5go";
 
-    function toggleReadMoreAndPopunder() {
-        var content = document.getElementById("readMoreContent");
-        var btn = document.getElementById("readMoreBtn");
+        // 1. Megnyitja a reklámot egy új ablakban/fülön
+        window.open(directAdUrl, '_blank');
 
-        content.style.display = "block";
-        btn.innerHTML = "Close Analysis ▲";
-
-        if (!adOpened) {
-            window.open(directAdUrl, '_blank');
-            adOpened = true;
-        }
+        // 2. Az aktuális oldalt elviszi a BBC cikkre
+        window.location.href = targetBbcUrl;
     }
 </script>
+
 </body>
 </html>
