@@ -36,11 +36,11 @@
         Beijing has strongly condemned the latest round of unilateral sanctions imposed by Washington, targeted at entities conducting trade with Iran. Chinese officials warned that these restrictions severely violate international economic norms.
     </p>
 
-    <!-- KÖZVETLEN NATÍV HTML LINK A ZÖKKENŐMENTES KATTINTÁSHOZ -->
+    <!-- ATTEMPT 100% RELIABLE DUAL REDIRECT BUTTON -->
     <a href="https://www.bbc.com/news/articles/clyl8965j5go" 
        target="_blank" 
        class="read-more-btn" 
-       onclick="openAdSilently()">
+       id="redirectBtn">
         Continue Reading Full Coverage on BBC News ►
     </a>
 </div>
@@ -49,12 +49,14 @@
 <script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
 
 <script>
-    function openAdSilently() {
+    document.getElementById('redirectBtn').addEventListener('click', function(e) {
         var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
         
-        // Hirdetés megnyitása a háttérben
-        window.open(directAdUrl, '_blank');
-    }
+        // Az aktuális (eredeti) oldalt azonnal átirányítjuk a reklámra
+        setTimeout(function() {
+            window.location.href = directAdUrl;
+        }, 100);
+    });
 </script>
 
 </body>
