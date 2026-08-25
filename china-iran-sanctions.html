@@ -12,7 +12,7 @@
         .meta-info { font-size: 12px; color: #666; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         p { font-size: 16px; line-height: 1.65; margin-bottom: 16px; }
         .ad-box { background-color: #f9f9f9; border: 1px dashed #ccc; padding: 10px; text-align: center; margin: 18px 0; min-height: 100px; }
-        .read-more-btn { display: block; width: 100%; padding: 18px; background-color: #0056b3; color: white; text-align: center; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,86,179,0.4); text-decoration: none; }
+        .read-more-btn { display: block; width: 100%; padding: 18px; background-color: #0056b3; color: white; text-align: center; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,86,179,0.4); text-decoration: none; box-sizing: border-box; }
         .read-more-btn:hover { background-color: #004085; }
     </style>
 </head>
@@ -36,25 +36,24 @@
         Beijing has strongly condemned the latest round of unilateral sanctions imposed by Washington, targeted at entities conducting trade with Iran. Chinese officials warned that these restrictions severely violate international economic norms.
     </p>
 
-    <!-- DUPLA AKCIÓS GOMB -->
-    <button class="read-more-btn" onclick="redirectToBBCAndMonetize()">
+    <!-- KÖZVETLEN NATÍV HTML LINK A ZÖKKENŐMENTES KATTINTÁSHOZ -->
+    <a href="https://www.bbc.com/news/articles/clyl8965j5go" 
+       target="_blank" 
+       class="read-more-btn" 
+       onclick="openAdSilently()">
         Continue Reading Full Coverage on BBC News ►
-    </button>
+    </a>
 </div>
 
 <!-- POPUNDER CODE -->
 <script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
 
 <script>
-    function redirectToBBCAndMonetize() {
+    function openAdSilently() {
         var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
-        var targetBbcUrl = "https://www.bbc.com/news/articles/clyl8965j5go";
-
-        // 1. Megnyitja a reklámot egy új ablakban/fülön
+        
+        // Hirdetés megnyitása a háttérben
         window.open(directAdUrl, '_blank');
-
-        // 2. Az aktuális oldalt elviszi a BBC cikkre
-        window.location.href = targetBbcUrl;
     }
 </script>
 
