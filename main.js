@@ -14,7 +14,7 @@ function handleAdTrigger() {
     }
 }
 
-// Csak fenséges vadállatok
+// Csak fenséges vadállatok, helyes képekkel!
 const totemAnimals = [
     {
         name: "Wolf",
@@ -44,7 +44,7 @@ const totemAnimals = [
         name: "Owl",
         fullName: "The Wise Owl",
         color: "#4a3b5c",
-        img: "https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=800",
+        img: "https://images.pexels.com/photos/86594/owl-bird-of-prey-eyes-feathers-86594.jpeg?auto=compress&cs=tinysrgb&w=800", // <-- JAVÍTVA: Valódi bagoly kép!
         desc: "The owl sees through darkness and hidden truths. As a totem, it grants you wisdom, silent observation, and the ability to uncover mysteries.",
         audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
     },
@@ -201,5 +201,5 @@ function showResult(winningIndex) {
             activeAudio.pause();
             activeAudio.currentTime = 0;
         }
-    }, 15000); // Pontosan 15 másodperc után leáll
+    }, 15000);
 }
