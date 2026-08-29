@@ -118,21 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawWheel();
 
-    // Forgatás és reklámkezelés (Popunder trükk)
+    // Forgatás kezelése – Tisztán, csak a játék logikájával
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
 
-        // Láthatatlan iframe-ben megnyitjuk a direkt linket
-        let hiddenFrame = document.getElementById("hidden-ad-frame");
-        if (!hiddenFrame) {
-            hiddenFrame = document.createElement("iframe");
-            hiddenFrame.id = "hidden-ad-frame";
-            hiddenFrame.style.display = "none";
-            document.body.appendChild(hiddenFrame);
-        }
-        hiddenFrame.src = directAdLink;
-
-        // A kerék forgatása helyben fut tovább
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
