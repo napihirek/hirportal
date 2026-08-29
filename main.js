@@ -14,7 +14,7 @@ function handleAdTrigger() {
     }
 }
 
-// 6 fenséges vadállat adatai
+// Csak fenséges vadállatok
 const totemAnimals = [
     {
         name: "Wolf",
@@ -66,7 +66,6 @@ const totemAnimals = [
     }
 ];
 
-// Véletlenszerű motivációs üzenetek
 const motivationalQuotes = [
     "\"Walk softly through life, but let your spirit roar like thunder.\"",
     "\"Listen to the wind, for it carries the voice of your ancestors.\"",
@@ -82,8 +81,8 @@ const numSegments = totemAnimals.length;
 const arcSize = (2 * Math.PI) / numSegments;
 let currentRotation = 0;
 let isSpinning = false;
+let activeAudio = null;
 
-// Kerék kirajzolása a canvasra
 function drawWheel() {
     const center = canvas.width / 2;
     const radius = center - 10;
@@ -93,7 +92,6 @@ function drawWheel() {
     totemAnimals.forEach((item, index) => {
         const angle = index * arcSize;
 
-        // Cikkely színezése
         ctx.beginPath();
         ctx.fillStyle = item.color;
         ctx.moveTo(center, center);
@@ -102,7 +100,6 @@ function drawWheel() {
         ctx.fill();
         ctx.stroke();
 
-        // Szöveg kiírása a cikkelyre
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(angle + arcSize / 2);
@@ -119,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const spinBtn = document.getElementById("spin-btn");
     const retryBtn = document.getElementById("retry-btn");
+    const downloadBtn = document.getElementById("download-btn");
 
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
@@ -128,8 +126,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     retryBtn.addEventListener("click", () => {
         if (isSpinning) return;
+        if (activeAudio) activeAudio.pause();
         handleAdTrigger();
         resetAndSpin();
+    });
+
+    downloadBtn.addEventListener("click", () => {
+        const cardElement = document.getElementById("capture-card");
+        html2canvas(cardElement, { scale: 2, useCORS: true }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'my-spirit-totem.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
     });
 });
 
@@ -137,21 +146,15 @@ function startSpin() {
     isSpinning = true;
     document.getElementById("spin-btn").disabled = true;
 
-    // Véletlenszerű nyertes index kiválasztása
     const winningIndex = Math.floor(Math.random() * numSegments);
-    
-    // Számoljuk ki a forgatási szöget (több teljes fordulat + a nyertes szegmens szöge)
-    const extraRotations = 5; // 5 teljes kör
+    const extraRotations = 5;
     const anglePerSegment = 360 / numSegments;
-    
-    // A nyertes szegmens középpontjának elérése a tetején (270 fok / -90 fok)
     const targetAngle = 360 - (winningIndex * anglePerSegment) - (anglePerSegment / 2);
     const totalRotation = currentRotation + (360 * extraRotations) + (targetAngle - (currentRotation % 360));
     
     currentRotation = totalRotation;
     canvas.style.transform = `rotate(${currentRotation}deg)`;
 
-    // Amikor a pörgetési animáció lejár (4 másodperc)
     setTimeout(() => {
         isSpinning = false;
         showResult(winningIndex);
@@ -176,12 +179,27 @@ function showResult(winningIndex) {
     document.getElementById("totem-quote").innerText = randomQuote;
     document.getElementById("totem-desc").innerText = animal.desc;
 
-    // Zene automatikus indítása
+    // Megosztás linkek beállítása
+    const shareUrl = encodeURIComponent(window.location.href);
+    const shareText = encodeURIComponent(`My sacred spirit totem is ${animal.fullName}! Discover yours too.`);
+    document.getElementById("share-fb").href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+    document.getElementById("share-pin").href = `https://pinterest.com/pin/create/button/?url=${shareUrl}&media=${encodeURIComponent(animal.img)}&description=${shareText}`;
+
+    // Relax zene lejátszása (Maximum 15 másodperc időzítővel)
     const audioBox = document.getElementById("audio-box");
     audioBox.innerHTML = `
-        <audio controls autoplay style="width:100%; filter: sepia(100%) contrast(150%);">
+        <audio id="relax-audio" controls autoplay style="width:100%; filter: sepia(100%) contrast(150%);">
             <source src="${animal.audio}" type="audio/mpeg">
             Your browser does not support audio.
         </audio>
+        <div style="font-size: 11px; color: #a17c55; margin-top: 4px;">Relax audio playing (auto-stops in 15s)</div>
     `;
+
+    activeAudio = document.getElementById("relax-audio");
+    setTimeout(() => {
+        if (activeAudio) {
+            activeAudio.pause();
+            activeAudio.currentTime = 0;
+        }
+    }, 15000); // Pontosan 15 másodperc után leáll
 }
