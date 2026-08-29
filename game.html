@@ -130,9 +130,17 @@
 
         /* RESULTS VIEW */
         .result-box { display: none; text-align: center; background-color: #0f172a; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-top: 20px;}
-        .result-box img { width: 100%; max-height: 320px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
-        .result-box h2 { color: #f59e0b; font-size: 26px; margin-bottom: 12px; font-weight: 800;}
-        .result-box p { font-size: 16px; line-height: 1.6; color: #cbd5e1; margin-bottom: 25px; }
+        
+        /* PDF EXPORT CONTENT STYLES */
+        .pdf-export-area {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            color: #f8fafc;
+        }
+        .pdf-export-area img { width: 100%; max-height: 320px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+        .pdf-export-area h2 { color: #f59e0b; font-size: 26px; margin-bottom: 12px; font-weight: 800;}
+        .pdf-export-area p { font-size: 16px; line-height: 1.6; color: #cbd5e1; margin-bottom: 25px; }
 
         /* PREMIUM MODULES GRID */
         .premium-grid { 
@@ -190,9 +198,13 @@
 
     <!-- ÉLES EREDMÉNY SZEKCIÓ -->
     <div id="result-wrapper" class="result-box">
-        <img id="res-image" src="" alt="Spirit Animal">
-        <h2 id="res-title">Your Spirit Beast</h2>
-        <p id="res-desc">Analyzing your personality profile...</p>
+        
+        <!-- TARGET FOR HTML2PDF -->
+        <div id="pdf-content" class="pdf-export-area">
+            <img id="res-image" src="" alt="Spirit Animal">
+            <h2 id="res-title">Your Spirit Beast</h2>
+            <p id="res-desc">Analyzing your personality profile...</p>
+        </div>
 
         <!-- MEGOSZTÁSI GOMBOK -->
         <div class="share-section">

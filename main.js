@@ -1,167 +1,157 @@
-// main.js - Central Controller & Monetization Engine
-
-const DIRECT_LINK_URL = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f";
-
-// Quiz Data
+// Spirit Animal Data structure
 const quizData = [
     {
-        q: "1. Where do you feel most at home?",
+        question: "1. Where do you feel most at home?",
         options: [
-            { text: "High in the mountains", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80", animal: "eagle" },
-            { text: "Deep, quiet forest", img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=400&q=80", animal: "wolf" },
-            { text: "Sunlit open plains", img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=400&q=80", animal: "lion" },
-            { text: "Quiet shadows at night", img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=400&q=80", animal: "panther" }
+            { text: "In a dense, quiet forest", animal: "owl", img: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=400" },
+            { text: "On open plains and mountains", animal: "eagle", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400" },
+            { text: "By rivers, lakes, or the ocean", animal: "wolf", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" },
+            { text: "In warm, sunny spaces", animal: "lion", img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400" }
         ]
     },
     {
-        q: "2. How do you handle major life challenges?",
+        question: "2. How do you handle difficult situations?",
         options: [
-            { text: "Confront them head-on with courage", img: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400&q=80", animal: "lion" },
-            { text: "Stay calm, quiet and strategic", img: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?auto=format&fit=crop&w=400&q=80", animal: "panther" },
-            { text: "Rely on my close pack and friends", img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=400&q=80", animal: "wolf" },
-            { text: "Rise high above the drama", img: "https://images.unsplash.com/photo-1611095790444-1dfa35e37b52?auto=format&fit=crop&w=400&q=80", animal: "eagle" }
+            { text: "Analyze carefully before acting", animal: "owl", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400" },
+            { text: "Rise above it and see the big picture", animal: "eagle", img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400" },
+            { text: "Rally your group/friends to solve it together", animal: "wolf", img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400" },
+            { text: "Face it directly with strength and confidence", animal: "lion", img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=400" }
         ]
     },
     {
-        q: "3. What is your primary core instinct?",
+        question: "3. What is your primary drive in life?",
         options: [
-            { text: "Leadership and authority", img: "https://images.unsplash.com/photo-1517649763962-0c623266010b?auto=format&fit=crop&w=400&q=80", animal: "lion" },
-            { text: "Deep loyalty and trust", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80", animal: "wolf" },
-            { text: "Vision and total freedom", img: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&w=400&q=80", animal: "eagle" },
-            { text: "Independence and mystery", img: "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?auto=format&fit=crop&w=400&q=80", animal: "panther" }
+            { text: "Leadership and authority", animal: "lion", img: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?w=400" },
+            { text: "Deep loyalty and trust", animal: "wolf", img: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=400" },
+            { text: "Vision and total freedom", animal: "eagle", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" },
+            { text: "Independence and mystery", animal: "owl", img: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400" }
         ]
     }
 ];
 
-const animalResults = {
+const resultsData = {
     lion: {
-        title: "You Are a Majestic Lion 🦁",
-        desc: "Bold, courageous, and a natural leader. You command respect and protect those you love with unwavering passion.",
-        img: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800&q=80"
+        title: "The Powerful Lion",
+        desc: "You are a natural-born leader. You possess immense courage, strength, and confidence. People look to you for guidance, and you take pride in protecting your pride.",
+        img: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?w=800",
+        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        compat: "Best Matched with: 🐺 Wolf (Loyal Allies) & 🦅 Eagle (Visionary Partners)"
     },
     wolf: {
-        title: "You Are a Timber Wolf 🐺",
-        desc: "Deeply loyal, intuitive, and protective. You thrive when surrounded by your trusted circle and family pack.",
-        img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=800&q=80"
+        title: "The Loyal Wolf",
+        desc: "You thrive on community, family, and deep trust. You are highly intuitive, fiercely protective, and know that true strength lies in working together.",
+        img: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800",
+        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        compat: "Best Matched with: 🦁 Lion (Strong Team) & 🦉 Owl (Wise Advisors)"
     },
     eagle: {
-        title: "You Are a Mountain Eagle 🦅",
-        desc: "Visionary and free-spirited. You see the bigger picture, rise above challenges, and cherish absolute freedom.",
-        img: "https://images.unsplash.com/photo-1611095790444-1dfa35e37b52?auto=format&fit=crop&w=800&q=80"
+        title: "The Free Eagle",
+        desc: "You value freedom and clear vision above all else. You can zoom out to see the bigger picture when others get lost in the details.",
+        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800",
+        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        compat: "Best Matched with: 🦉 Owl (Intellectual Equals) & 🦁 Lion (Ambitious Leaders)"
     },
-    panther: {
-        title: "You Are a Black Panther 🐆",
-        desc: "Mysterious, independent, and sharp. You move quietly in life but possess immense hidden power.",
-        img: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?auto=format&fit=crop&w=800&q=80"
+    owl: {
+        title: "The Wise Owl",
+        desc: "You are observant, strategic, and deeply thoughtful. You see what others miss and prefer wisdom and clarity over rushing into action.",
+        img: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800",
+        audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        compat: "Best Matched with: 🦅 Eagle (Shared Vision) & 🐺 Wolf (Trusted Companions)"
     }
 };
 
-let currentStep = 0;
-let scores = { lion: 0, wolf: 0, eagle: 0, panther: 0 };
-window.userFinalResult = null; // Stored globally for modules
+let currentQuestion = 0;
+let scores = { lion: 0, wolf: 0, eagle: 0, owl: 0 };
+let finalResultKey = "lion";
 
-function triggerAdAndExecute(callback) {
-    // Open Adsterra Direct Link in new tab for monetization
-    window.open(DIRECT_LINK_URL, '_blank');
-    if (callback && typeof callback === 'function') {
-        callback();
-    }
-}
+document.addEventListener("DOMContentLoaded", () => {
+    loadQuestion();
 
-function renderQuestion() {
-    if (currentStep >= quizData.length) {
-        finishQuiz();
-        return;
-    }
-    const step = quizData[currentStep];
-    document.getElementById("question-text").innerText = step.q;
+    // Event listener for PDF Generation
+    document.getElementById('btn-pdf-mod').addEventListener('click', generatePDF);
+    
+    // Event listener for Audio player
+    document.getElementById('btn-audio-mod').addEventListener('click', playAudio);
+
+    // Event listener for Compatibility
+    document.getElementById('btn-compat-mod').addEventListener('click', showCompatibility);
+});
+
+function loadQuestion() {
+    const qData = quizData[currentQuestion];
+    document.getElementById("question-text").innerText = qData.question;
+    
     const container = document.getElementById("options-container");
     container.innerHTML = "";
 
-    step.options.forEach(opt => {
+    qData.options.forEach(opt => {
         const card = document.createElement("div");
         card.className = "option-card";
-        card.innerHTML = `<img src="${opt.img}" alt="Option"><span>${opt.text}</span>`;
-        card.onclick = () => {
-            scores[opt.animal]++;
-            currentStep++;
-            renderQuestion();
-        };
+        card.innerHTML = `
+            <img src="${opt.img}" alt="${opt.text}">
+            <span>${opt.text}</span>
+        `;
+        card.onclick = () => selectOption(opt.animal);
         container.appendChild(card);
     });
 }
 
-function finishQuiz() {
-    document.getElementById("quiz-wrapper").style.display = "none";
-    
-    // Determine winner
-    let maxScore = -1;
-    let finalAnimal = 'lion';
-    for (const animal in scores) {
-        if (scores[animal] > maxScore) {
-            maxScore = scores[animal];
-            finalAnimal = animal;
-        }
+function selectOption(animal) {
+    scores[animal]++;
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        showResult();
     }
+}
 
-    const res = animalResults[finalAnimal];
-    window.userFinalResult = { key: finalAnimal, ...res };
+function showResult() {
+    document.getElementById("quiz-wrapper").style.display = "none";
+    document.getElementById("result-wrapper").style.display = "block";
 
-    document.getElementById('main-title').innerText = "Your Spirit Animal Revealed!";
-    document.getElementById("res-image").src = res.img;
-    document.getElementById("res-title").innerText = res.title;
-    document.getElementById("res-desc").innerText = res.desc;
-    document.getElementById('result-wrapper').style.display = 'block';
+    // Determine highest score
+    finalResultKey = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    const result = resultsData[finalResultKey];
+
+    document.getElementById("res-title").innerText = result.title;
+    document.getElementById("res-desc").innerText = result.desc;
+    document.getElementById("res-image").src = result.img;
 
     // Update social share buttons
-    const pageUrl = encodeURIComponent(window.location.href);
-    const shareDesc = encodeURIComponent(`I got ${res.title}! Discover your spirit wild animal here:`);
-    document.getElementById('pinBtn').href = `https://pinterest.com/pin/create/button/?url=${pageUrl}&media=${encodeURIComponent(res.img)}&description=${shareDesc}`;
-    document.getElementById('fbBtn').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+    const shareUrl = encodeURIComponent(window.location.href);
+    const shareText = encodeURIComponent(`I got ${result.title} on the Spirit Beast Test!`);
+    document.getElementById("fbBtn").href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+    document.getElementById("pinBtn").href = `https://pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareText}`;
 }
 
-// Module Loaders with Lazy Script Injection
-function loadScript(src, callback) {
-    if (document.querySelector(`script[src="${src}"]`)) {
-        if (callback) callback();
-        return;
-    }
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = callback;
-    document.head.appendChild(script);
+// Fixed PDF generation logic
+function generatePDF() {
+    const element = document.getElementById('pdf-content');
+    
+    const opt = {
+        margin:       10,
+        filename:     `Spirit_Animal_${finalResultKey}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
 }
 
-// Event Listeners for Premium Feature Buttons
-document.getElementById('btn-pdf-mod').addEventListener('click', () => {
-    triggerAdAndExecute(() => {
-        loadScript('pdf-generator.js', () => {
-            if (window.generatePDFCertificate) {
-                window.generatePDFCertificate(window.userFinalResult);
-            }
-        });
-    });
-});
+function playAudio() {
+    const container = document.getElementById("audio-container");
+    const result = resultsData[finalResultKey];
+    container.innerHTML = `<audio controls autoplay style="width:100%;"><source src="${result.audio}" type="audio/mpeg">Your browser does not support audio.</audio>`;
+}
 
-document.getElementById('btn-audio-mod').addEventListener('click', () => {
-    triggerAdAndExecute(() => {
-        loadScript('audio-player.js', () => {
-            if (window.playSpiritAudio) {
-                window.playSpiritAudio(window.userFinalResult.key);
-            }
-        });
-    });
-});
-
-document.getElementById('btn-compat-mod').addEventListener('click', () => {
-    triggerAdAndExecute(() => {
-        loadScript('compatibility.js', () => {
-            if (window.showCompatibility) {
-                window.showCompatibility(window.userFinalResult.key);
-            }
-        });
-    });
-});
-
-// Initialize Quiz
-renderQuestion();
+function showCompatibility() {
+    const container = document.getElementById("compat-container");
+    const result = resultsData[finalResultKey];
+    container.innerHTML = `<div style="background:#0f172a; padding:15px; border-radius:8px; border:1px solid #334155;">
+        <h4 style="margin:0 0 8px 0; color:#f59e0b;">Soul Match Profile</h4>
+        <p style="margin:0; font-size:14px; color:#cbd5e1;">${result.compat}</p>
+    </div>`;
+}
