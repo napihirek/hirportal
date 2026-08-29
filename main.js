@@ -118,13 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawWheel();
 
-    // Forgatás és reklámkezelés
+    // Forgatás és reklámkezelés (Popunder trükk)
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
-        
-        // Hirdetés megnyitása új ablakban/fülön, hogy a főoldal ne navigáljon el
-        window.open(directAdLink, '_blank');
 
+        // 1. Megnyitunk egy üres lapot a háttérbe, és azonnal átirányítjuk a reklámra
+        const newTab = window.open('about:blank', '_blank');
+        if (newTab) {
+            newTab.location.href = directAdLink;
+            // Visszahozzuk a fókuszt az eredeti ablakra
+            window.focus();
+        }
+
+        // 2. A kerék forgatása a saját oldaladon zavartalanul indul
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
