@@ -1,60 +1,60 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Spirit Animal / Totem Database
+    // Totemállatok adatbázisa a pontos fájlnevekkel
     const totems = [
-        {
-            name: "Wolf",
-            quote: "The wolf is the guardian of inner instincts, loyalty, and community strength.",
-            desc: "The wolf spirit guide teaches you to trust your inner voice and intuition. Strong bonds tie you to your family and community, yet you maintain your fierce independence.",
-            img: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=600&q=80",
-            audio: ""
-        },
-        {
-            name: "Eagle",
-            quote: "Soar high above and perceive even the finest details of the universe.",
-            desc: "The eagle totem symbolizes clarity, spiritual awareness, and a higher perspective. It empowers you to rise above everyday challenges and view the bigger picture.",
-            img: "https://images.unsplash.com/photo-1611689342806-0863700ce1e4?auto=format&fit=crop&w=600&q=80",
-            audio: ""
-        },
-        {
-            name: "Bear",
-            quote: "True strength is rooted in inner stillness and deliberation.",
-            desc: "The bear is a symbol of courage, healing, and introspection. It shows you when to pull back and gather strength, and when to step forward with determination.",
-            img: "https://images.unsplash.com/photo-1536537766649-74d1a5c6819c?auto=format&fit=crop&w=600&q=80",
-            audio: ""
-        },
-        {
-            name: "Stag",
-            quote: "Walk the paths of life with grace, gentleness, and resolve.",
-            desc: "The stag represents grace, watchfulness, and nobility. It encourages you to approach obstacles with gentleness and dignity.",
-            img: "https://images.unsplash.com/photo-1484406566174-9da000fda645?auto=format&fit=crop&w=600&q=80",
-            audio: ""
-        },
-        {
-            name: "Owl",
-            quote: "Wisdom dwells where darkness meets the light.",
-            desc: "The owl is the keeper of the night, hidden truths, and deep wisdom. It helps you look past illusions and perceive reality clearly.",
-            img: "https://images.unsplash.com/photo-1516733968663-dbd632d43d57?auto=format&fit=crop&w=600&q=80",
-            audio: ""
-        },
         {
             name: "Fox",
             quote: "A sharp mind and swift adaptability overcome every obstacle.",
             desc: "The fox spirit brings cleverness, flexibility, and resourcefulness into your life. It teaches you how to find a way out of even the most complex situations.",
-            img: "https://images.unsplash.com/photo-1516934024629-b0ee233cc229?auto=format&fit=crop&w=600&q=80",
+            img: "fox.jpg", // A te saját képed
             audio: ""
         },
         {
             name: "Bison",
             quote: "Abundance, endurance, and profound respect for the Earth.",
             desc: "The bison embodies ancient strength and abundance. It reminds you to stay grateful for everything you have and press forward with unwavering perseverance.",
-            img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80",
+            img: "bison.jpg",
             audio: ""
         },
         {
             name: "Raven",
             quote: "The gateway of change is open; step through the mysteries.",
             desc: "The raven is the harbinger of magic, turning points, and creation. It helps you uncover the secrets of your subconscious and embrace transformation.",
-            img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80",
+            img: "raven.jpg",
+            audio: ""
+        },
+        {
+            name: "Wolf",
+            quote: "The wolf is the guardian of inner instincts, loyalty, and community strength.",
+            desc: "The wolf spirit guide teaches you to trust your inner voice and intuition. Strong bonds tie you to your family and community, yet you maintain your fierce independence.",
+            img: "wolf.jpg",
+            audio: ""
+        },
+        {
+            name: "Eagle",
+            quote: "Soar high above and perceive even the finest details of the universe.",
+            desc: "The eagle totem symbolizes clarity, spiritual awareness, and a higher perspective. It empowers you to rise above everyday challenges and view the bigger picture.",
+            img: "Eagle.jpg", // Figyelj a nagy E betűre, ha a fájlnevedben is nagy!
+            audio: ""
+        },
+        {
+            name: "Bear",
+            quote: "True strength is rooted in inner stillness and deliberation.",
+            desc: "The bear is a symbol of courage, healing, and introspection. It shows you when to pull back and gather strength, and when to step forward with determination.",
+            img: "bear.jpg",
+            audio: ""
+        },
+        {
+            name: "Stag",
+            quote: "Walk the paths of life with grace, gentleness, and resolve.",
+            desc: "The stag represents grace, watchfulness, and nobility. It encourages you to approach obstacles with gentleness and dignity.",
+            img: "stag.jpg",
+            audio: ""
+        },
+        {
+            name: "Owl",
+            quote: "Wisdom dwells where darkness meets the light.",
+            desc: "The owl is the keeper of the night, hidden truths, and deep wisdom. It helps you look past illusions and perceive reality clearly.",
+            img: "owl.jpg",
             audio: ""
         }
     ];
@@ -75,12 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const sharePin = document.getElementById("share-pin");
 
     const sliceAngle = (2 * Math.PI) / totems.length;
-    const colors = ["#9b4f2f", "#d7a83d", "#7c3826", "#c8aa7b", "#5b2a1c", "#b76a32", "#3c2115", "#e8c98b"];
+    const colors = ["#9b4f2f", "#d7a83d", "#7c3826", "#c8aa7b", "#5b2a1c",="#b76a32", "#3c2115", "#e8c98b"];
 
     let currentRotation = 0;
     let isSpinning = false;
 
-    // Draw the wheel onto the canvas
+    // Kerék kirajzolása pontos sorrendben
     function drawWheel() {
         const center = canvas.width / 2;
         const radius = canvas.width / 2;
@@ -91,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const startAngle = index * sliceAngle;
             const endAngle = startAngle + sliceAngle;
 
-            // Slice background
             ctx.beginPath();
             ctx.moveTo(center, center);
             ctx.arc(center, center, radius, startAngle, endAngle);
@@ -102,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.lineWidth = 3;
             ctx.stroke();
 
-            // Text inside slice
             ctx.save();
             ctx.translate(center, center);
             ctx.rotate(startAngle + sliceAngle / 2);
@@ -116,29 +114,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawWheel();
 
-    // Spin logic
+    // Forgatás logika
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
 
-        const randomNumerator = Math.floor(Math.random() * totems.length);
-        const extraDegrees = 360 * 5;
-        const degreesPerSlice = 360 / totems.length;
-        const targetDegree = extraDegrees + (totems.length - randomNumerator) * degreesPerSlice - (degreesPerSlice / 2);
+        // Véletlenszerű index kiválasztása
+        const selectedIndex = Math.floor(Math.random() * totems.length);
+        
+        const extraSpins = 360 * 5; // 5 teljes kör
+        const sliceDegree = 360 / totems.length;
+        
+        // Kiszámoljuk, hogy pontosan hol álljon meg a mutató alatt
+        const targetDegree = extraSpins + (360 - (selectedIndex * sliceDegree)) - (sliceDegree / 2);
 
-        currentRotation += targetDegree;
+        currentRotation = targetDegree;
         canvas.style.transform = `rotate(${currentRotation}deg)`;
 
         setTimeout(() => {
             isSpinning = false;
             spinBtn.disabled = false;
-            showResult(randomNumerator);
+            showResult(selectedIndex);
         }, 4000);
     });
 
-    // Display result
+    // Eredmény megjelenítése a helyes képpel és adatokkal
     function showResult(index) {
         const selectedTotem = totems[index];
 
@@ -168,13 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
         resultBox.scrollIntoView({ behavior: "smooth" });
     }
 
-    // Spin Again button
     retryBtn.addEventListener("click", () => {
         resultBox.style.display = "none";
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // Download card as PNG using html2canvas
     downloadBtn.addEventListener("click", () => {
         const captureCard = document.getElementById("capture-card");
         downloadBtn.textContent = "⌛ Generating Download...";
