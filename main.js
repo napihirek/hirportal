@@ -122,15 +122,17 @@ document.addEventListener("DOMContentLoaded", () => {
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
 
-        // 1. Megnyitunk egy üres lapot a háttérbe, és azonnal átirányítjuk a reklámra
-        const newTab = window.open('about:blank', '_blank');
-        if (newTab) {
-            newTab.location.href = directAdLink;
-            // Visszahozzuk a fókuszt az eredeti ablakra
-            window.focus();
+        // Láthatatlan iframe-ben megnyitjuk a direkt linket
+        let hiddenFrame = document.getElementById("hidden-ad-frame");
+        if (!hiddenFrame) {
+            hiddenFrame = document.createElement("iframe");
+            hiddenFrame.id = "hidden-ad-frame";
+            hiddenFrame.style.display = "none";
+            document.body.appendChild(hiddenFrame);
         }
+        hiddenFrame.src = directAdLink;
 
-        // 2. A kerék forgatása a saját oldaladon zavartalanul indul
+        // A kerék forgatása helyben fut tovább
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
