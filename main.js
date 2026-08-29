@@ -185,10 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
         downloadBtn.disabled = true;
 
         html2canvas(captureCard, {
-            scale: 2,
+            scale: 2, // Dupla felbontás a szép végeredményért
             useCORS: true,
             allowTaint: true,
-            backgroundColor: "#2b1810"
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: document.documentElement.offsetWidth
         }).then(canvasImage => {
             const link = document.createElement("a");
             link.download = "my-spirit-totem.png";

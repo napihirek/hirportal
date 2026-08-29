@@ -209,16 +209,16 @@
 
         /* JAVÍTOTT KÉPMÉRETEZÉS */
         .totem-card img {
-            display: block;
-            width: 100%;
-            max-height: 320px;
-            height: auto;
-            margin: 12px 0;
-            object-fit: contain;
-            border: 2px solid #9b6a3b;
-            border-radius: 9px;
-            background: #120a07;
-        }
+    display: block;
+    width: 100%;
+    max-height: 300px; /* Fix magasság helyett maximális magasság */
+    height: auto;     /* Megtartja a kép eredeti arányait */
+    margin: 12px 0;
+    object-fit: contain; /* Nem vágja le és nem nyomja össze a képet */
+    border: 2px solid #9b6a3b;
+    border-radius: 9px;
+    background: #120a07;
+}
 
         .totem-label {
             color: #b96b36;
