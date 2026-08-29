@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Totemállatok adatbázisa a saját fájlneveiddel
+    // Megadott direkt hirdetési link
+    const directAdLink = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f";
+
+    // Totemállatok adatbázisa
     const totems = [
         {
             name: "Fox",
@@ -92,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const startAngle = index * sliceAngle;
             const endAngle = startAngle + sliceAngle;
 
-            // Szelet háttér
             ctx.beginPath();
             ctx.moveTo(center, center);
             ctx.arc(center, center, radius, startAngle, endAngle);
@@ -103,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.lineWidth = 3;
             ctx.stroke();
 
-            // Felirat
             ctx.save();
             ctx.translate(center, center);
             ctx.rotate(startAngle + sliceAngle / 2);
@@ -117,29 +118,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawWheel();
 
-    // Forgatás kezelése
+    // Forgatás és reklámkezelés
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
+        
+        // Hirdetés megnyitása új ablakban/fülön, hogy a főoldal ne navigáljon el
+        window.open(directAdLink, '_blank');
+
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
 
-        // Véletlenszerű nyertes elem kiválasztása
         const selectedIndex = Math.floor(Math.random() * numSlices);
-
-        // Kiszámítjuk a pontos elforgatási szöget a nyílhoz (a nyíl felül van, 270 foknál)
         const sliceDeg = 360 / numSlices;
         const targetSliceCenter = (selectedIndex * sliceDeg) + (sliceDeg / 2);
         
-        // 5 teljes fordulat + a nyertes szelethez tartozó eltolás
         const extraSpins = 360 * 5;
         const targetRotation = extraSpins + (360 - targetSliceCenter) + 270;
 
-        // Halmozott forgatás az akadásmentes animációért
         currentRotation += (targetRotation - (currentRotation % 360));
         canvas.style.transform = `rotate(${currentRotation}deg)`;
 
-        // Animáció lejárta utáni felbukkanás
         setTimeout(() => {
             isSpinning = false;
             spinBtn.disabled = false;
@@ -182,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+    // Kártya letöltése képtorzulás nélkül
     downloadBtn.addEventListener("click", () => {
         const captureCard = document.getElementById("capture-card");
         downloadBtn.textContent = "⌛ Generating Download...";
@@ -190,7 +190,8 @@ document.addEventListener("DOMContentLoaded", () => {
         html2canvas(captureCard, {
             scale: 2,
             useCORS: true,
-            backgroundColor: null
+            allowTaint: true,
+            backgroundColor: "#2b1810"
         }).then(canvasImage => {
             const link = document.createElement("a");
             link.download = "my-spirit-totem.png";
