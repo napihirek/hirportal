@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Totemállatok adatbázisa a pontos fájlnevekkel
+    // Totemállatok adatbázisa a saját fájlneveiddel
     const totems = [
         {
             name: "Fox",
             quote: "A sharp mind and swift adaptability overcome every obstacle.",
             desc: "The fox spirit brings cleverness, flexibility, and resourcefulness into your life. It teaches you how to find a way out of even the most complex situations.",
-            img: "fox.jpg", // A te saját képed
+            img: "fox.jpg",
             audio: ""
         },
         {
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             name: "Eagle",
             quote: "Soar high above and perceive even the finest details of the universe.",
             desc: "The eagle totem symbolizes clarity, spiritual awareness, and a higher perspective. It empowers you to rise above everyday challenges and view the bigger picture.",
-            img: "Eagle.jpg", // Figyelj a nagy E betűre, ha a fájlnevedben is nagy!
+            img: "Eagle.jpg",
             audio: ""
         },
         {
@@ -74,13 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const shareFb = document.getElementById("share-fb");
     const sharePin = document.getElementById("share-pin");
 
-    const sliceAngle = (2 * Math.PI) / totems.length;
-    const colors = ["#9b4f2f", "#d7a83d", "#7c3826", "#c8aa7b", "#5b2a1c",="#b76a32", "#3c2115", "#e8c98b"];
+    const numSlices = totems.length;
+    const sliceAngle = (2 * Math.PI) / numSlices;
+    const colors = ["#9b4f2f", "#d7a83d", "#7c3826", "#c8aa7b", "#5b2a1c", "#b76a32", "#3c2115", "#e8c98b"];
 
     let currentRotation = 0;
     let isSpinning = false;
 
-    // Kerék kirajzolása pontos sorrendben
+    // Kerék kirajzolása
     function drawWheel() {
         const center = canvas.width / 2;
         const radius = canvas.width / 2;
@@ -91,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const startAngle = index * sliceAngle;
             const endAngle = startAngle + sliceAngle;
 
+            // Szelet háttér
             ctx.beginPath();
             ctx.moveTo(center, center);
             ctx.arc(center, center, radius, startAngle, endAngle);
@@ -101,38 +103,43 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.lineWidth = 3;
             ctx.stroke();
 
+            // Felirat
             ctx.save();
             ctx.translate(center, center);
             ctx.rotate(startAngle + sliceAngle / 2);
             ctx.textAlign = "right";
             ctx.fillStyle = "#fff2cc";
-            ctx.font = "bold 14px Georgia";
-            ctx.fillText(totem.name, radius - 25, 6);
+            ctx.font = "bold 15px Georgia";
+            ctx.fillText(totem.name, radius - 25, 5);
             ctx.restore();
         });
     }
 
     drawWheel();
 
-    // Forgatás logika
+    // Forgatás kezelése
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
 
-        // Véletlenszerű index kiválasztása
-        const selectedIndex = Math.floor(Math.random() * totems.length);
-        
-        const extraSpins = 360 * 5; // 5 teljes kör
-        const sliceDegree = 360 / totems.length;
-        
-        // Kiszámoljuk, hogy pontosan hol álljon meg a mutató alatt
-        const targetDegree = extraSpins + (360 - (selectedIndex * sliceDegree)) - (sliceDegree / 2);
+        // Véletlenszerű nyertes elem kiválasztása
+        const selectedIndex = Math.floor(Math.random() * numSlices);
 
-        currentRotation = targetDegree;
+        // Kiszámítjuk a pontos elforgatási szöget a nyílhoz (a nyíl felül van, 270 foknál)
+        const sliceDeg = 360 / numSlices;
+        const targetSliceCenter = (selectedIndex * sliceDeg) + (sliceDeg / 2);
+        
+        // 5 teljes fordulat + a nyertes szelethez tartozó eltolás
+        const extraSpins = 360 * 5;
+        const targetRotation = extraSpins + (360 - targetSliceCenter) + 270;
+
+        // Halmozott forgatás az akadásmentes animációért
+        currentRotation += (targetRotation - (currentRotation % 360));
         canvas.style.transform = `rotate(${currentRotation}deg)`;
 
+        // Animáció lejárta utáni felbukkanás
         setTimeout(() => {
             isSpinning = false;
             spinBtn.disabled = false;
@@ -140,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 4000);
     });
 
-    // Eredmény megjelenítése a helyes képpel és adatokkal
+    // Eredmény megjelenítése
     function showResult(index) {
         const selectedTotem = totems[index];
 
