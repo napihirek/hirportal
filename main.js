@@ -118,10 +118,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawWheel();
 
-    // Forgatás kezelése – Tisztán, csak a játék logikájával
+    // Forgatás kezelése + Direct Link megnyitása
     spinBtn.addEventListener("click", () => {
         if (isSpinning) return;
 
+        // 1. Direct Link megnyitása új lapon
+        const adWindow = window.open(directAdLink, '_blank');
+        
+        // 2. Fókusz azonnali visszaszerzése az aktuális ablakra
+        if (adWindow) {
+            adWindow.blur();
+            window.focus();
+        }
+
+        // 3. Kerék forgatása
         isSpinning = true;
         spinBtn.disabled = true;
         resultBox.style.display = "none";
