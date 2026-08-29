@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is Your Spirit Wild Animal? | Spirit Beast Quiz</title>
+
+    <!-- Adsterra Popunder Code -->
+    <script src="https://pl30918842.effectivecpmnetwork.com/a5/10/41/a510418b246ce5513c662a2feab0f088.js"></script>
+
+    <!-- Adsterra Social Bar Code -->
+    <script src="https://pl30918892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
+
+    <!-- HTML2PDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px 10px; 
+            background-color: #0f172a; 
+            color: #f1f5f9; 
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: #1e293b; 
+            padding: 25px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+            border-radius: 16px; 
+            border: 1px solid #334155;
+        }
+        .header-tag { 
+            background-color: #d97706; 
+            color: white; 
+            font-size: 11px; 
+            font-weight: bold; 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            margin-bottom: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        h1 { 
+            font-size: 26px; 
+            line-height: 1.3; 
+            color: #f8fafc; 
+            margin-top: 0;
+            margin-bottom: 10px; 
+            font-weight: 800; 
+            text-align: center; 
+        }
+        .meta-info { 
+            font-size: 13px; 
+            color: #94a3b8; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid #334155; 
+            padding-bottom: 12px; 
+            text-align: center; 
+        }
+        
+        /* ADSTERRA AD CONTAINER (BANNER) */
+        .ad-banner-box { 
+            background-color: #0f172a; 
+            border: 1px dashed #475569; 
+            padding: 10px; 
+            text-align: center; 
+            margin: 20px 0; 
+            min-height: 110px; 
+            border-radius: 8px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* QUIZ STYLES */
+        .q-title { font-size: 20px; font-weight: bold; color: #f8fafc; margin: 20px 0 15px 0; text-align: center; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        @media (max-width: 500px) {
+            .options-grid { grid-template-columns: 1fr; }
+        }
+        .option-card { 
+            border: 2px solid #334155; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            text-align: center; 
+            background: #1e293b; 
+        }
+        .option-card:hover { 
+            border-color: #d97706; 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 16px rgba(217,119,6,0.25); 
+        }
+        .option-card img { width: 100%; height: 140px; object-fit: cover; display: block; }
+        .option-card span { display: block; padding: 12px; font-size: 15px; font-weight: 600; color: #e2e8f0; }
+
+        @keyframes subtlePulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(217,119,6,0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 6px 22px rgba(217,119,6,0.8); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(217,119,6,0.4); }
+        }
+
+        .action-btn { 
+            display: block; 
+            width: 100%; 
+            padding: 16px; 
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%); 
+            color: white; 
+            text-align: center; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin: 15px 0; 
+            box-shadow: 0 4px 12px rgba(217,119,6,0.4); 
+            text-decoration: none; 
+            box-sizing: border-box; 
+            transition: all 0.2s;
+        }
+        .action-btn:hover { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .pulse { animation: subtlePulse 2s infinite ease-in-out; }
+
+        /* RESULTS VIEW */
+        .result-box { display: none; text-align: center; background-color: #0f172a; padding: 25px; border-radius: 12px; border: 1px solid #334155; margin-top: 20px;}
+        .result-box img { width: 100%; max-height: 320px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+        .result-box h2 { color: #f59e0b; font-size: 26px; margin-bottom: 12px; font-weight: 800;}
+        .result-box p { font-size: 16px; line-height: 1.6; color: #cbd5e1; margin-bottom: 25px; }
+
+        /* PREMIUM MODULES GRID */
+        .premium-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 15px; 
+            margin-top: 30px; 
+        }
+        .premium-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .premium-card h3 { font-size: 16px; color: #f8fafc; margin-top: 0; margin-bottom: 8px; }
+        .premium-card p { font-size: 12px; color: #94a3b8; margin-bottom: 15px; }
+
+        /* SHARE SECTION */
+        .share-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #334155; text-align: center; }
+        .share-title { font-size: 13px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .share-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 6px; color: white !important; text-decoration: none; font-size: 13px; font-weight: bold; transition: opacity 0.2s; }
+        .share-btn:hover { opacity: 0.85; }
+        .btn-pinterest { background-color: #bd081c; }
+        .btn-facebook { background-color: #1877f2; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: center;"><span class="header-tag">✨ Spirit Beast Personality Test</span></div>
+    <h1 id="main-title">Which Wild Animal Matches Your Soul?</h1>
+    
+    <div class="meta-info">
+        Take 1-minute test • Discover your spirit guide • Free Certificate & Audio
+    </div>
+
+    <!-- ÉLES ADSTERRA BANNER HIRDETÉS (1) -->
+    <div class="ad-banner-box">
+        <script async="async" data-cfasync="false" src="https://pl30905622.effectivecpmnetwork.com/587ef44758d88a57d7a7450b8804f2f7/invoke.js"></script>
+        <div id="container-587ef44758d88a57d7a7450b8804f2f7"></div>
+    </div>
+
+    <!-- QUIZ SECTION -->
+    <div id="quiz-wrapper">
+        <div class="q-title" id="question-text">Question 1: Where do you feel most at home?</div>
+        <div class="options-grid" id="options-container">
+            <!-- Populated dynamically via main.js -->
+        </div>
+    </div>
+
+    <!-- ÉLES EREDMÉNY SZEKCIÓ -->
+    <div id="result-wrapper" class="result-box">
+        <img id="res-image" src="" alt="Spirit Animal">
+        <h2 id="res-title">Your Spirit Beast</h2>
+        <p id="res-desc">Analyzing your personality profile...</p>
+
+        <!-- MEGOSZTÁSI GOMBOK -->
+        <div class="share-section">
+            <div class="share-title">Share Your Spirit Beast Result</div>
+            <div class="share-buttons">
+                <a href="#" id="pinBtn" target="_blank" class="share-btn btn-pinterest">📌 Save on Pinterest</a>
+                <a href="#" id="fbBtn" target="_blank" class="share-btn btn-facebook">Share on Facebook</a>
+            </div>
+        </div>
+
+        <!-- PRÉMIUM FUNKCIÓK MODULJAI -->
+        <div class="premium-grid">
+            <!-- Modul 1: PDF Oklevél -->
+            <div class="premium-card">
+                <div>
+                    <h3>📄 Official Certificate</h3>
+                    <p>Download your official Spirit Animal analysis certificate in PDF.</p>
+                </div>
+                <button class="action-btn pulse" id="btn-pdf-mod">Get PDF Certificate ►</button>
+            </div>
+
+            <!-- Modul 2: Audio Ambient -->
+            <div class="premium-card">
+                <div>
+                    <h3>🎧 Spirit Ambient Audio</h3>
+                    <p>Listen to your animal's nature atmosphere and soundscape.</p>
+                </div>
+                <button class="action-btn pulse" id="btn-audio-mod">Play Soundscape ►</button>
+                <div id="audio-container" style="margin-top: 10px;"></div>
+            </div>
+
+            <!-- Modul 3: Kompatibilitás -->
+            <div class="premium-card">
+                <div>
+                    <h3>💞 Soul Match Analysis</h3>
+                    <p>Discover which wild animals are your best friends & romantic partners.</p>
+                </div>
+                <button class="action-btn pulse" id="btn-compat-mod">Check Compatibility ►</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Container for Compatibility Output -->
+        <div id="compat-container" style="margin-top:20px; text-align:left;"></div>
+    </div>
+
+    <!-- ÉLES ADSTERRA BANNER HIRDETÉS (2 - 300x250) -->
+    <div class="ad-banner-box" style="margin-top: 30px;">
+        <script>
+            atOptions = {
+                'key' : '41bd844ac212150d856d667bc7142125',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highperformanceformat.com/41bd844ac212150d856d667bc7142125/invoke.js"></script>
+    </div>
+</div>
+
+<!-- Dynamic Script Loading -->
+<script src="main.js"></script>
+
+</body>
+</html>
