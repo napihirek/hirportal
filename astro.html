@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saját Angyalkártya Jóslás</title>
+
+    <!-- Facebook Open Graph Meta Tagek -->
+    <meta property="og:title" content="Napi Angyalkártya Jóslás" />
+    <meta property="og:description" content="Húzz egy lapot és fogadd el az Égiek mai üzenetét!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://napihirek.github.io/hirportal/astro.html" />
+    <meta property="og:image" content="https://napihirek.github.io/hirportal/background.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Misztikus Google Fonts betűtípusok -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- HTML2Canvas a kártyák letöltéséhez -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0d0814;
+            --card-gold: #ffd700;
+            --purple-glow: #6b21a8;
+            --text-color: #f3e8ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            background: radial-gradient(circle at center, #1e112a 0%, var(--bg-color) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            margin-top: 15px;
+            text-align: center;
+            padding: 0 10px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            color: var(--card-gold);
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+            margin: 0 0 5px 0;
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #c084fc;
+            margin: 0;
+            font-style: italic;
+        }
+
+        /* Fő elrendezés: Bal oldali gombok, Jobb oldali tartalom */
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            max-width: 1200px;
+            margin: 10px auto 0 auto;
+            align-items: flex-start;
+            box-sizing: border-box;
+            padding: 0 15px;
+        }
+
+        /* Bal oldali függőleges menüsáv */
+        .sidebar-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 240px;
+            flex-shrink: 0;
+        }
+
+        /* Jobb oldali tartalomterület */
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 400px;
+        }
+
+        button, select {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            background: linear-gradient(135deg, #4c1d95, #6b21a8);
+            border: 1px solid var(--card-gold);
+            color: #fff;
+            padding: 10px 14px;
+            font-size: 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        select option {
+            background-color: #1e112a;
+            color: #f3e8ff;
+            padding: 10px;
+        }
+
+        button:hover, button.active {
+            transform: translateX(4px);
+            box-shadow: 0 4px 18px var(--purple-glow);
+            background: linear-gradient(135deg, #7e22ce, #9333ea);
+            border-color: #fff;
+        }
+
+        .fb-btn {
+            background: linear-gradient(135deg, #1877f2, #1152a8) !important;
+            border-color: #60a5fa !important;
+        }
+
+        .fb-btn:hover {
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.6) !important;
+        }
+
+        .audio-btn {
+            background: rgba(107, 33, 168, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+        }
+
+        .audio-btn.playing {
+            background: rgba(126, 34, 206, 0.8);
+            border-color: #fff;
+            box-shadow: 0 0 10px var(--card-gold);
+        }
+
+        /* Banner reklám konténer */
+        .ad-banner-container {
+            margin: 10px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Kártyalegyező */
+        .deck-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .card {
+            position: absolute;
+            width: 130px;
+            height: 200px;
+            left: 85px;
+            top: 10px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transform-origin: bottom center;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), top 0.4s ease, left 0.4s ease;
+            border: 2px solid #3b0764;
+            overflow: hidden;
+            background-color: #1a0b2e;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card:hover {
+            top: -10px !important;
+            box-shadow: 0 0 15px var(--card-gold);
+        }
+
+        /* Eredmény Panel - 1/3 Lapos Jósláshoz */
+        .result-container {
+            display: none;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(23, 15, 38, 0.85);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            animation: fadeIn 0.8s ease forwards;
+            box-sizing: border-box;
+        }
+
+        .cards-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 150px;
+            height: 240px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            border: 2px solid var(--card-gold);
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .flip-card-front img, .flip-card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .message-box {
+            background: rgba(13, 8, 20, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid var(--card-gold);
+        }
+
+        .message-box h2 {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--card-gold);
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        .message-box p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #f3e8ff;
+        }
+
+        /* NAPI ÚTMUTATÁS SZÖVEGES KÁRTYA STÍLUS */
+        .daily-container {
+            display: none;
+            max-width: 450px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .daily-flip-card {
+            background-color: transparent;
+            width: 250px;
+            height: 370px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin: 0 auto;
+        }
+
+        .daily-flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .daily-flip-card.flipped .daily-flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .daily-front, .daily-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            box-sizing: border-box;
+        }
+
+        .daily-front {
+            border: 2px solid var(--card-gold);
+            overflow: hidden;
+        }
+
+        .daily-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .daily-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(180deg, #180927 0%, #0d0417 100%);
+            border: 2px solid var(--card-gold);
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .daily-back .position-title {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--card-gold);
+            font-size: 1.2rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .daily-back .divider {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--card-gold), transparent);
+            margin: 10px 0 15px 0;
+        }
+
+        .daily-back .card-name {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--card-gold);
+            font-size: 1rem;
+            margin: 0 0 12px 0;
+        }
+
+        .daily-back .card-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #f3e8ff;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Modalis elemek */
+        .modal-section {
+            display: none;
+            background: rgba(13, 8, 20, 0.95);
+            border: 1px solid var(--card-gold);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 480px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .lucky-numbers {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .number-ball {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+            color: #0d0814;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .history-section {
+            display: none;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(23, 15, 38, 0.85);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sidebar-controls {
+                width: 100%;
+                max-width: 320px;
+                margin-bottom: 20px;
+            }
+
+            button:hover {
+                transform: translateY(-2px);
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            p.subtitle {
+                font-size: 1rem;
+            }
+
+            .deck-container {
+                width: 260px;
+                height: 270px;
+            }
+
+            .card {
+                width: 110px;
+                height: 170px;
+                left: 75px;
+            }
+
+            .flip-card {
+                width: 120px;
+                height: 190px;
+            }
+
+            .daily-flip-card {
+                width: 220px;
+                height: 340px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>NAPI ANGYALKÁRTYA</h1>
+        <p class="subtitle">Húzz egy lapot és fogadd el az Égiek mai üzenetét!</p>
+    </header>
+
+    <div class="main-container">
+        <!-- BAL OLDALI GOMB-MENÜ -->
+        <div class="sidebar-controls">
+            <button class="audio-btn" onclick="toggleHealingSound()">✨ Gyógyító Hang (528 Hz)</button>
+            <button id="relax-btn" class="audio-btn" onclick="toggleRelaxMusic()">🧘 Relax Zene</button>
+            <button id="mode-1" class="active" onclick="handleButtonClick(() => setMode(1))">1 Lapos Jóslás</button>
+            <button id="mode-3" onclick="handleButtonClick(() => setMode(3))">3 Lapos Kirakás</button>
+            <button id="mode-daily" onclick="handleButtonClick(() => startDailyGuidanceShuffle())">✨ Napi Útmutatás</button>
+            <button onclick="handleButtonClick(() => toggleLuckyNumbers())">🎰 Szerencseszámok</button>
+            <button onclick="handleButtonClick(() => toggleHoroscope())">🔮 Napi Horoszkóp</button>
+            <button onclick="handleButtonClick(() => shuffleDeck())">Megkeverem a paklit</button>
+            <button onclick="handleButtonClick(() => toggleHistory())">Naplóm</button>
+            
+            <!-- Az Utolsó Előtti gomb: Kártya Mentése Képként -->
+            <button id="download-btn" onclick="handleButtonClick(() => downloadCardImage())">📸 Kártya Mentése Képként</button>
+            
+            <!-- Az Utolsó gomb: Facebook Megosztás -->
+            <button class="fb-btn" onclick="handleButtonClick(() => shareOnFacebook())">📘 Megosztás Facebookon</button>
+        </div>
+
+        <!-- JOBB OLDALI TARTALOMTERÜLET -->
+        <div class="content-area">
+            <!-- Szerencseszámok Modul -->
+            <div class="modal-section" id="lucky-modal">
+                <h3 style="font-family: 'Cinzel Decorative', serif; color: var(--card-gold); margin-top: 0;">✨ Mai Szerencseszámaid</h3>
+                <div class="lucky-numbers" id="lucky-numbers-list"></div>
+                <button onclick="handleButtonClick(() => generateLuckyNumbers())">Új Számok Generálása</button>
+            </div>
+
+            <!-- Horoszkóp Modul -->
+            <div class="modal-section" id="horoscope-modal">
+                <h3 style="font-family: 'Cinzel Decorative', serif; color: var(--card-gold); margin-top: 0;">🔮 Napi Csillagjegy Horoszkóp</h3>
+                <select id="zodiac-select" onchange="showHoroscope()" style="margin-bottom: 15px; width: 100%;">
+                    <option value="">-- Válaszd ki a csillagjegyeidet --</option>
+                    <option value="kos">Kos (03.21 - 04.19)</option>
+                    <option value="bika">Bika (04.20 - 05.20)</option>
+                    <option value="ikrek">Ikrek (05.21 - 06.20)</option>
+                    <option value="rak">Rák (06.21 - 07.22)</option>
+                    <option value="oroszlán">Oroszlán (07.23 - 08.22)</option>
+                    <option value="szuz">Szűz (08.23 - 09.22)</option>
+                    <option value="merleg">Mérleg (09.23 - 10.22)</option>
+                    <option value="skorpio">Skorpió (10.23 - 11.21)</option>
+                    <option value="nyilas">Nyilas (11.22 - 12.21)</option>
+                    <option value="bak">Bak (12.22 - 01.19)</option>
+                    <option value="vizonto">Vízöntő (01.20 - 02.18)</option>
+                    <option value="halak">Halak (02.19 - 03.20)</option>
+                </select>
+                <p id="horoscope-text" style="font-size: 1.1rem; color: #f3e8ff; font-style: italic; line-height: 1.6;">Válassz egy csillagjegyet az elolvasáshoz.</p>
+            </div>
+
+            <!-- NAPI ÚTMUTATÁS (Egyetlen Szöveges Kártya Modul) -->
+            <div class="daily-container" id="daily-container">
+                <p style="text-align: center; color: #c084fc; font-style: italic; font-size: 1rem; margin-top: 0;">Kattints a kártyára a megfordításhoz!</p>
+                <div class="daily-flip-card" id="daily-card-element" onclick="flipDailyCard()">
+                    <div class="daily-flip-card-inner">
+                        <div class="daily-front">
+                            <img src="background.jpg" alt="Hátlap">
+                        </div>
+                        <div class="daily-back" id="daily-card-back">
+                            <h3 class="position-title">NAPI ÚTMUTATÁS</h3>
+                            <div class="divider"></div>
+                            <h4 class="card-name" id="daily-card-title">...</h4>
+                            <p class="card-desc" id="daily-card-desc">...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kártyalegyező az Angyalkártya Jósláshoz -->
+            <div class="deck-container" id="deck"></div>
+
+            <!-- Eredmény Panel - 1/3 Lapos Jósláshoz -->
+            <div class="result-container" id="result">
+                <p style="text-align: center; color: #c084fc; font-style: italic; font-size: 1rem; margin-top: 0;">Kattints a kártyára a megfordításhoz!</p>
+                <div class="cards-grid" id="cards-grid"></div>
+                
+                <div class="message-box" id="message-box">
+                    <h2 id="card-title">Válassz kártyát!</h2>
+                    <p id="card-desc">Kattints a fenti kártyák egyikére a megfordításhoz és az üzenet elolvasásához.</p>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button style="max-width: 200px;" onclick="handleButtonClick(() => downloadResultCards())">📸 Kártyák Mentése</button>
+                    <button style="max-width: 200px;" onclick="handleButtonClick(() => resetDeck())">Új húzás</button>
+                </div>
+            </div>
+
+            <!-- Napló Panel -->
+            <div class="history-section" id="history">
+                <h2 style="font-family: 'Cinzel Decorative', serif; color: var(--card-gold); margin-top: 0; text-align: center;">Korábbi Húzásaid</h2>
+                <div id="history-list">Még nincs elmentett húzásod.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Reklám Elhelyezése -->
+    <div class="ad-banner-container">
+        <script>
+            atOptions = {
+                'key' : '41bd844ac212150d856d667bc7142125',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highperformanceformat.com/41bd844ac212150d856d667bc7142125/invoke.js"></script>
+    </div>
+
+    <!-- Social Bar Reklám Kód -->
+    <script src="https://pl30918892.effectivecpmnetwork.com/1b/f1/c2/1bf1c24d49d6b8a2127be5769000cdc3.js"></script>
+
+    <script>
+        const DIRECT_LINK = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f";
+        const SHARE_URL = "https://napihirek.github.io/hirportal/astro.html";
+        
+        let isRedirectCooldown = false;
+
+        function handleButtonClick(actionCallback) {
+            if (!isRedirectCooldown) {
+                window.open(DIRECT_LINK, '_blank');
+                isRedirectCooldown = true;
+                setTimeout(() => { isRedirectCooldown = false; }, 30000);
+            }
+            if (typeof actionCallback === 'function') {
+                actionCallback();
+            }
+        }
+
+        function shareOnFacebook() {
+            const pageUrl = encodeURIComponent(SHARE_URL);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`, '_blank', 'width=600,height=400');
+        }
+
+        const swooshAudio = new Audio('swoosh.mp3');
+        const relaxAudio = new Audio('rel1.mp3');
+        relaxAudio.loop = true;
+
+        function playSwooshSound() {
+            swooshAudio.currentTime = 0;
+            swooshAudio.play().catch(e => {});
+        }
+
+        function toggleRelaxMusic() {
+            const relaxBtn = document.getElementById('relax-btn');
+            if (relaxAudio.paused) {
+                relaxAudio.play().then(() => {
+                    relaxBtn.classList.add('playing');
+                    relaxBtn.innerText = '⏸️ Relax Zene';
+                }).catch(e => {});
+            } else {
+                relaxAudio.pause();
+                relaxBtn.classList.remove('playing');
+                relaxBtn.innerText = '🧘 Relax Zene';
+            }
+        }
+
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+        }
+
+        function playGongSound() {
+            initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(432, audioCtx.currentTime); 
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3.0);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 3.0);
+        }
+
+        let healingOsc = null, healingGain = null;
+        function toggleHealingSound() {
+            initAudio();
+            if (healingOsc) {
+                healingGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+                setTimeout(() => { healingOsc.stop(); healingOsc = null; }, 500);
+            } else {
+                healingOsc = audioCtx.createOscillator();
+                healingGain = audioCtx.createGain();
+                healingOsc.type = 'sine';
+                healingOsc.frequency.setValueAtTime(528, audioCtx.currentTime);
+                healingGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                healingGain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 1);
+                healingOsc.connect(healingGain);
+                healingGain.connect(audioCtx.destination);
+                healingOsc.start();
+            }
+        }
+
+        const cardsData = [
+            { id: 'kezdet', title: 'A Kezdet Angyala', file: 'kezdet.jpg', desc: 'Új fejezet nyílik az életedben. Ne félj megtenni az első lépést, mert az angyalok vigyázzák az utadat. Bármilyen ötleted vagy terved van, most van itt a tökéletes pillanat a megvalósításra!' },
+            { id: 'bolcsesseg', title: 'A Bölcsesség Angyala', file: 'bölcsesség.jpg', desc: 'A válasz, amit keresel, már ott van a lelked mélyén. Csendesedj el egy pillanatra, és hallgass a megérzéseidre! Belső bölcsességed pontosan tudja, mi a helyes döntés.' },
+            { id: 'szeretet', title: 'A Szeretet Angyala', file: 'szeretet.jpg', desc: 'Nyisd meg a szívedet a feltétel nélküli szeretet előtt! Nyújts megértést önmagad és mások felé. A szeretet energiája most minden konfliktust és nehézséget képes feloldani körülötted.' },
+            { id: 'ero', title: 'Az Erő Angyala', file: 'erő.jpg', desc: 'Sokkal erősebb vagy, mint gondolnád. A nehézségek csak átmenetiek, és a belső tartásod segít átlendülni rajtuk. Bízhatsz a saját képességeidben és kitartásodban!' },
+            { id: 'beke', title: 'A Belső Béke Angyala', file: 'béke.jpg', desc: 'Engedd el a feszültséget és az aggodalmakat. Veszel egy mély levegőt, és tudd, hogy minden a legnagyobb rendben van. A béke nem a külső körülményektől, hanem a belső döntésedtől függ.' },
+            { id: 'gyogyulas', title: 'A Gyógyulás Angyala', file: 'gyógyulás.jpg', desc: 'Gyógyító energiák veszik körül a testedet és a lelkedet. Bármilyen régi sérelem vagy fizikai fáradtság gyötört, most eljött a megújulás és a teljes feltöltődés ideje.' }
+        ];
+
+        const hIntro = ["Ma különösen erős égi energiák támogatják a lépéseidet.", "Egy váratlan, örömteli fordulat teheti szebbé a mai napodat.", "Belső békére és csendes elvonulásra lehet szükséged.", "A csillagok állása ma kedvez a nagy felismeréseknek.", "Olyan kisugárzással rendelkezel ma, ami vonzza a jó lehetőségeket."];
+        const hAdvice = ["Nyílj meg a harmóniának és engedd el a félelmeidet!", "Ne halogasd a fontos döntéseket, bízhatsz az ösztöneidben.", "Hallgass a lelked halk szavára, mielőtt válaszolnál valakinek.", "Oszd meg az ötleteidet másokkal is, pozitív fogadtatásra lelsz.", "Tarts egy kis pihenőt, és töltődj fel a természetben vagy csendben."];
+        const hFocus = ["A mai nap kulcsszava: **Elfogadás**.", "A mai nap kulcsszava: **Rugalmasság**.", "A mai nap kulcsszava: **Bátorság**.", "A mai nap kulcsszava: **Szeretet**.", "A mai nap kulcsszava: **Megújulás**."];
+
+        function getDailySeed(signStr) {
+            const today = new Date();
+            const dateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate() + "-" + signStr;
+            let hash = 0;
+            for (let i = 0; i < dateStr.length; i++) {
+                hash = dateStr.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return Math.abs(hash);
+        }
+
+        function generateDailyHoroscope(sign) {
+            const seed = getDailySeed(sign);
+            return `"${hIntro[seed % hIntro.length]} ${hAdvice[(seed >> 2) % hAdvice.length]} ${hFocus[(seed >> 4) % hFocus.length]}"`;
+        }
+
+        let drawCount = 1;
+        let selectedCards = [];
+        let isShuffling = false;
+
+        const deck = document.getElementById('deck');
+        const result = document.getElementById('result');
+        const dailyContainer = document.getElementById('daily-container');
+        const historySec = document.getElementById('history');
+
+        function setMode(count) {
+            drawCount = count;
+            document.getElementById('mode-1').classList.toggle('active', count === 1);
+            document.getElementById('mode-3').classList.toggle('active', count === 3);
+            document.getElementById('mode-daily').classList.remove('active');
+            resetDeck();
+        }
+
+        function createDeck() {
+            deck.innerHTML = '';
+            deck.style.display = 'block';
+            result.style.display = 'none';
+            dailyContainer.style.display = 'none';
+            historySec.style.display = 'none';
+            closeModals();
+            selectedCards = [];
+
+            const displayCards = [...cardsData, ...cardsData];
+            displayCards.forEach((card, index) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card';
+                const angle = (index - (displayCards.length - 1) / 2) * 7; 
+                cardEl.style.transform = `rotate(${angle}deg)`;
+                cardEl.innerHTML = `<img src="background.jpg" alt="Hátlap">`;
+                cardEl.onclick = () => { if (!isShuffling) handleCardClick(card, cardEl); };
+                deck.appendChild(cardEl);
+            });
+        }
+
+        function shuffleDeck() {
+            if (isShuffling) return;
+            isShuffling = true;
+            playSwooshSound();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => { card.style.transform = 'rotate(0deg)'; card.style.top = '10px'; });
+            setTimeout(() => {
+                playSwooshSound();
+                cards.forEach(card => {
+                    const randomX = (Math.random() - 0.5) * 150;
+                    const randomRot = (Math.random() - 0.5) * 60;
+                    card.style.transform = `translateX(${randomX}px) rotate(${randomRot}deg)`;
+                });
+            }, 400);
+            setTimeout(() => {
+                playSwooshSound();
+                cards.forEach((card, index) => {
+                    const angle = (index - (cards.length - 1) / 2) * 7;
+                    card.style.transform = `translateX(0px) rotate(${angle}deg)`;
+                });
+                isShuffling = false;
+            }, 1200);
+        }
+
+        function handleCardClick(card, cardEl) {
+            if (selectedCards.length < drawCount && !selectedCards.includes(card)) {
+                selectedCards.push(card);
+                playSwooshSound();
+                cardEl.style.opacity = '0.3';
+                if (selectedCards.length === drawCount) {
+                    setTimeout(showResults, 500);
+                }
+            }
+        }
+
+        function showResults() {
+            deck.style.display = 'none';
+            result.style.display = 'block';
+            const grid = document.getElementById('cards-grid');
+            grid.innerHTML = '';
+            const labels = drawCount === 3 ? ['Múlt', 'Jelen', 'Jövő'] : ['Napi Útmutatás'];
+
+            selectedCards.forEach((card, index) => {
+                const flipCard = document.createElement('div');
+                flipCard.className = 'flip-card';
+                flipCard.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><img src="background.jpg" alt="Hátlap"></div>
+                        <div class="flip-card-back"><img src="${card.file}" alt="${card.title}"></div>
+                    </div>
+                    <p style="text-align:center; color: var(--card-gold); font-weight:bold; font-size: 1rem; margin-top:8px;">${labels[index]}</p>
+                `;
+                flipCard.onclick = () => {
+                    if (!flipCard.classList.contains('flipped')) playGongSound();
+                    flipCard.classList.toggle('flipped');
+                    document.getElementById('card-title').innerText = `${labels[index]}: ${card.title}`;
+                    document.getElementById('card-desc').innerText = card.desc;
+                };
+                grid.appendChild(flipCard);
+            });
+            saveToHistory();
+        }
+
+        function startDailyGuidanceShuffle() {
+            if (isShuffling) return;
+            document.getElementById('mode-1').classList.remove('active');
+            document.getElementById('mode-3').classList.remove('active');
+            document.getElementById('mode-daily').classList.add('active');
+            result.style.display = 'none';
+            dailyContainer.style.display = 'none';
+            historySec.style.display = 'none';
+            closeModals();
+            createDeck();
+            
+            isShuffling = true;
+            playSwooshSound();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => { card.style.transform = 'rotate(0deg)'; card.style.top = '10px'; });
+            setTimeout(() => {
+                playSwooshSound();
+                cards.forEach(card => {
+                    const randomX = (Math.random() - 0.5) * 150;
+                    const randomRot = (Math.random() - 0.5) * 60;
+                    card.style.transform = `translateX(${randomX}px) rotate(${randomRot}deg)`;
+                });
+            }, 400);
+            setTimeout(() => {
+                playSwooshSound();
+                cards.forEach((card, index) => {
+                    const angle = (index - (cards.length - 1) / 2) * 7;
+                    card.style.transform = `translateX(0px) rotate(${angle}deg)`;
+                });
+                setTimeout(() => { isShuffling = false; showDailyGuidanceCard(); }, 600);
+            }, 1200);
+        }
+
+        function showDailyGuidanceCard() {
+            deck.style.display = 'none';
+            const randomCard = cardsData[Math.floor(Math.random() * cardsData.length)];
+            document.getElementById('daily-card-title').innerText = randomCard.title.toUpperCase();
+            document.getElementById('daily-card-desc').innerText = randomCard.desc;
+            const dailyCardEl = document.getElementById('daily-card-element');
+            dailyCardEl.classList.remove('flipped');
+            dailyContainer.style.display = 'block';
+        }
+
+        function flipDailyCard() {
+            const dailyCardEl = document.getElementById('daily-card-element');
+            if (!dailyCardEl.classList.contains('flipped')) playGongSound();
+            dailyCardEl.classList.toggle('flipped');
+        }
+
+        // KÁRTYÁK MENTÉSE KÉPKÉNT – stabil, tükröződésmentes megoldás
+        async function downloadCardImage() {
+            const dailyCont = document.getElementById('daily-container');
+            const resultCont = document.getElementById('result');
+
+            if (resultCont.style.display === 'block') {
+                await saveResultAsImage();
+                return;
+            }
+
+            if (dailyCont.style.display === 'block') {
+                await saveDailyAsImage();
+                return;
+            }
+
+            alert('Először húznod kell egy kártyát vagy meg kell nyitnod a Napi Útmutatást a mentéshez!');
+        }
+
+        // A kártyák képeit közvetlenül egy új canvasra rajzoljuk.
+        // Így a CSS rotateY/3D flip egyáltalán nem tud tükrözést okozni.
+        async function loadImageForCanvas(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error('Nem tölthető be: ' + src));
+                img.src = src;
+            });
+        }
+
+        function roundRectPath(ctx, x, y, w, h, r) {
+            const radius = Math.min(r, w / 2, h / 2);
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.arcTo(x + w, y, x + w, y + h, radius);
+            ctx.arcTo(x + w, y + h, x, y + h, radius);
+            ctx.arcTo(x, y + h, x, y, radius);
+            ctx.arcTo(x, y, x + w, y, radius);
+            ctx.closePath();
+        }
+
+        async function saveResultAsImage() {
+            const cards = selectedCards.slice(0, drawCount);
+            if (!cards.length) {
+                alert('Nincs menthető kártya.');
+                return;
+            }
+
+            const isThree = cards.length === 3;
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // 3 laposhoz szélesebb, 1 laposhoz kompakt kép.
+            const cardW = isThree ? 260 : 320;
+            const cardH = isThree ? 390 : 480;
+            const gap = isThree ? 35 : 0;
+            const padding = 50;
+            const titleH = 95;
+            const footerH = 45;
+
+            canvas.width = isThree
+                ? padding * 2 + cardW * 3 + gap * 2
+                : padding * 2 + cardW;
+            canvas.height = padding * 2 + titleH + cardH + footerH;
+
+            // Háttér
+            const bg = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 20,
+                canvas.width / 2, canvas.height / 2, canvas.width
+            );
+            bg.addColorStop(0, '#2a1738');
+            bg.addColorStop(1, '#0d0814');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Cím
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 28px Georgia';
+            ctx.fillText(
+                isThree ? '✦ HÁROM LAPOS KIRAKÁS ✦' : '✦ ANGYALKÁRTYA ✦',
+                canvas.width / 2,
+                padding + 32
+            );
+
+            ctx.fillStyle = '#c084fc';
+            ctx.font = 'italic 17px Georgia';
+            ctx.fillText(
+                isThree ? 'Múlt  •  Jelen  •  Jövő' : 'Az Égiek üzenete',
+                canvas.width / 2,
+                padding + 62
+            );
+
+            const labels = isThree
+                ? ['MÚLT', 'JELEN', 'JÖVŐ']
+                : ['ÜZENET'];
+
+            for (let i = 0; i < cards.length; i++) {
+                const card = cards[i];
+                const img = await loadImageForCanvas(card.file);
+
+                const x = isThree
+                    ? padding + i * (cardW + gap)
+                    : padding;
+                const y = padding + titleH;
+
+                // Aránytartó képkitöltés – NINCS flip, NINCS tükrözés.
+                const scale = Math.max(cardW / img.naturalWidth, cardH / img.naturalHeight);
+                const drawW = img.naturalWidth * scale;
+                const drawH = img.naturalHeight * scale;
+                const sx = (drawW - cardW) / 2;
+                const sy = (drawH - cardH) / 2;
+
+                ctx.save();
+
+                // Arany keret
+                ctx.shadowColor = 'rgba(255, 215, 0, 0.35)';
+                ctx.shadowBlur = 18;
+                ctx.fillStyle = '#1a0b2e';
+                roundRectPath(ctx, x, y, cardW, cardH, 16);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Kártyakép klippelése lekerekített téglalapba.
+                ctx.save();
+                roundRectPath(ctx, x, y, cardW, cardH, 16);
+                ctx.clip();
+                ctx.drawImage(img, x - sx, y - sy, drawW, drawH);
+                ctx.restore();
+
+                ctx.strokeStyle = '#ffd700';
+                ctx.lineWidth = 3;
+                roundRectPath(ctx, x, y, cardW, cardH, 16);
+                ctx.stroke();
+
+                // Pozíció
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 18px Georgia';
+                ctx.textAlign = 'center';
+                ctx.fillText(labels[i], x + cardW / 2, y + cardH + 30);
+
+                ctx.restore();
+            }
+
+            ctx.fillStyle = '#9f7aea';
+            ctx.font = '14px Georgia';
+            ctx.textAlign = 'center';
+            ctx.fillText(
+                new Date().toLocaleDateString('hu-HU'),
+                canvas.width / 2,
+                canvas.height - 18
+            );
+
+            try {
+                canvas.toBlob(blob => {
+                    if (!blob) {
+                        alert('A kép elkészítése nem sikerült.');
+                        return;
+                    }
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = isThree ? '3_Lapos_Kirakas.png' : '1_Lapos_Joslas.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                }, 'image/png');
+            } catch (error) {
+                console.error('Kép mentési hiba:', error);
+                alert('A kép mentése nem sikerült.');
+            }
+        }
+
+        async function saveDailyAsImage() {
+            const title = document.getElementById('daily-card-title').innerText || 'Napi Útmutatás';
+            const desc = document.getElementById('daily-card-desc').innerText || '';
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = 700;
+            canvas.height = 900;
+
+            const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            bg.addColorStop(0, '#180927');
+            bg.addColorStop(1, '#0d0417');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 4;
+            roundRectPath(ctx, 25, 25, 650, 850, 22);
+            ctx.stroke();
+
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 30px Georgia';
+            ctx.fillText('NAPI ÚTMUTATÁS', 350, 90);
+
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 25px Georgia';
+            ctx.fillText(title, 350, 150);
+
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(120, 180);
+            ctx.lineTo(580, 180);
+            ctx.stroke();
+
+            ctx.fillStyle = '#f3e8ff';
+            ctx.font = '20px Georgia';
+            const words = desc.split(/\s+/);
+            const lines = [];
+            let line = '';
+            const maxWidth = 520;
+
+            for (const word of words) {
+                const test = line ? line + ' ' + word : word;
+                if (ctx.measureText(test).width > maxWidth) {
+                    lines.push(line);
+                    line = word;
+                } else {
+                    line = test;
+                }
+            }
+            if (line) lines.push(line);
+
+            let y = 240;
+            for (const l of lines) {
+                ctx.fillText(l, 350, y);
+                y += 32;
+            }
+
+            ctx.fillStyle = '#9f7aea';
+            ctx.font = '14px Georgia';
+            ctx.fillText(new Date().toLocaleDateString('hu-HU'), 350, 840);
+
+            canvas.toBlob(blob => {
+                if (!blob) {
+                    alert('A kép elkészítése nem sikerült.');
+                    return;
+                }
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'Napi_Utmutatas.png';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }, 'image/png');
+        }
+
+        function downloadResultCards() {
+            downloadCardImage();
+        }
+
+        function toggleLuckyNumbers() {
+            const modal = document.getElementById('lucky-modal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                document.getElementById('horoscope-modal').style.display = 'none';
+                generateLuckyNumbers();
+            }
+        }
+
+        function generateLuckyNumbers() {
+            const container = document.getElementById('lucky-numbers-list');
+            container.innerHTML = '';
+            let numbers = [];
+            while(numbers.length < 5) {
+                let r = Math.floor(Math.random() * 90) + 1;
+                if(!numbers.includes(r)) numbers.push(r);
+            }
+            numbers.sort((a,b) => a - b).forEach(num => {
+                const ball = document.createElement('div');
+                ball.className = 'number-ball';
+                ball.innerText = num;
+                container.appendChild(ball);
+            });
+        }
+
+        function toggleHoroscope() {
+            const modal = document.getElementById('horoscope-modal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                document.getElementById('lucky-modal').style.display = 'none';
+            }
+        }
+
+        function showHoroscope() {
+            const sign = document.getElementById('zodiac-select').value;
+            const textEl = document.getElementById('horoscope-text');
+            textEl.innerHTML = sign ? generateDailyHoroscope(sign) : 'Válassz egy csillagjegyet az elolvasáshoz.';
+        }
+
+        function closeModals() {
+            document.getElementById('lucky-modal').style.display = 'none';
+            document.getElementById('horoscope-modal').style.display = 'none';
+        }
+
+        function saveToHistory() {
+            const history = JSON.parse(localStorage.getItem('tarot_history') || '[]');
+            history.unshift({
+                date: new Date().toLocaleDateString('hu-HU'),
+                cards: selectedCards.map(c => c.title).join(', ')
+            });
+            localStorage.setItem('tarot_history', JSON.stringify(history.slice(0, 10)));
+        }
+
+        function toggleHistory() {
+            if (historySec.style.display === 'block') {
+                historySec.style.display = 'none';
+            } else {
+                deck.style.display = 'none';
+                result.style.display = 'none';
+                dailyContainer.style.display = 'none';
+                closeModals();
+                historySec.style.display = 'block';
+
+                const history = JSON.parse(localStorage.getItem('tarot_history') || '[]');
+                const list = document.getElementById('history-list');
+                list.innerHTML = history.length === 0 ? '<p style="text-align:center;">Még nincs mentett húzásod.</p>' : 
+                    history.map(item => `
+                        <div style="border-bottom: 1px solid rgba(255,215,0,0.1); padding: 10px 0; display:flex; justify-content:space-between; font-size: 0.95rem;">
+                            <span><strong>${item.date}</strong></span>
+                            <span style="color: var(--card-gold); text-align:right;">${item.cards}</span>
+                        </div>
+                    `).join('');
+            }
+        }
+
+        function resetDeck() {
+            createDeck();
+        }
+
+        createDeck();
+    </script>
+</body>
+</html>
