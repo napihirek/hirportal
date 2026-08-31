@@ -170,21 +170,23 @@
 </div>
 
 <script>
-    // Redirect logic
+    // Eredeti, jól működő átirányítási logika
     document.getElementById('redirectBtn').addEventListener('click', function(e) {
         e.preventDefault();
 
         var targetUrl = "https://apnews.com/article/trump-noncitizen-voting-midterms-election-integrity-ids-3c24d72b0b91803ed097226ee00f9483";
         var directAdUrl = "https://www.effectivecpmnetwork.com/vnenqyicb?key=4d43da1c5fc88a3ee9c22caada6d224f"; 
 
+        // 1. Új lapon megnyitja az eredeti forrás cikket
         window.open(targetUrl, '_blank');
 
+        // 2. Az aktuális landing oldalt átirányítja az Adsterra hirdetésre
         setTimeout(function() {
             window.location.replace(directAdUrl);
         }, 300);
     });
 
-    // Simple AdBlock Detector
+    // AdBlocker Észlelő
     window.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             var adContainer = document.getElementById('container-587ef44758d88a57d7a7450b8804f2f7');
